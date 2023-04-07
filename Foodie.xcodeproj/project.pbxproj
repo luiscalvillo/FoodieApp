@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A887772129DEA2150089BC49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772029DEA2150089BC49 /* AppDelegate.swift */; };
 		A887772329DEA2150089BC49 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772229DEA2150089BC49 /* SceneDelegate.swift */; };
-		A887772529DEA2150089BC49 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772429DEA2150089BC49 /* ViewController.swift */; };
+		A887772529DEA2150089BC49 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772429DEA2150089BC49 /* HomeViewController.swift */; };
 		A887772829DEA2150089BC49 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A887772629DEA2150089BC49 /* Main.storyboard */; };
 		A887772A29DEA2160089BC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A887772929DEA2160089BC49 /* Assets.xcassets */; };
 		A887772D29DEA2160089BC49 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A887772B29DEA2160089BC49 /* LaunchScreen.storyboard */; };
@@ -19,7 +19,7 @@
 		A887771D29DEA2150089BC49 /* Foodie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Foodie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A887772029DEA2150089BC49 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A887772229DEA2150089BC49 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A887772429DEA2150089BC49 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A887772429DEA2150089BC49 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A887772729DEA2150089BC49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A887772929DEA2160089BC49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A887772C29DEA2160089BC49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 			children = (
 				A887772029DEA2150089BC49 /* AppDelegate.swift */,
 				A887772229DEA2150089BC49 /* SceneDelegate.swift */,
-				A887772429DEA2150089BC49 /* ViewController.swift */,
+				A887772429DEA2150089BC49 /* HomeViewController.swift */,
 				A887772629DEA2150089BC49 /* Main.storyboard */,
 				A887772929DEA2160089BC49 /* Assets.xcassets */,
 				A887772B29DEA2160089BC49 /* LaunchScreen.storyboard */,
@@ -138,7 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A887772529DEA2150089BC49 /* ViewController.swift in Sources */,
+				A887772529DEA2150089BC49 /* HomeViewController.swift in Sources */,
 				A887772129DEA2150089BC49 /* AppDelegate.swift in Sources */,
 				A887772329DEA2150089BC49 /* SceneDelegate.swift in Sources */,
 			);
@@ -290,6 +290,8 @@
 				DEVELOPMENT_TEAM = ZNWUG5VYXT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Foodie/Info.plist;
+				INFOPLIST_KEY_NSLocationUsageDescription = "We need your location so  you can view restaurants nearby.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need you location to show restaurants nearby.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -319,6 +321,8 @@
 				DEVELOPMENT_TEAM = ZNWUG5VYXT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Foodie/Info.plist;
+				INFOPLIST_KEY_NSLocationUsageDescription = "We need your location so  you can view restaurants nearby.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need you location to show restaurants nearby.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

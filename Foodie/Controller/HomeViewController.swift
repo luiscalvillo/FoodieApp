@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import SDWebImage
 
 class HomeViewController: UIViewController {
     
@@ -27,7 +28,9 @@ class HomeViewController: UIViewController {
     
     let mapView = MKMapView()
     
+    let businessPopUpStackView = UIStackView()
     let businessStackView = UIStackView()
+    let businessImageView = UIImageView()
     let businessNameLabel = UILabel()
     let addressLabel = UILabel()
     let distanceLabel = UILabel()
@@ -98,12 +101,21 @@ class HomeViewController: UIViewController {
         let originY: CGFloat = view.frame.height - popUpViewHeight - (margin * 2)
         
         popUpView = UIView(frame: CGRect(x: margin, y: originY, width: width, height: popUpViewHeight))
+        popUpView.layer.cornerRadius = 32
+        popUpView.clipsToBounds = true
         popUpView.backgroundColor = .white
         self.view.addSubview(popUpView)
         
+        businessImageView.contentMode = .scaleAspectFill
+        businessImageView.frame.size.width = 50
+        
+        businessPopUpStackView.axis = .horizontal
+        businessPopUpStackView.alignment = .leading
+        businessPopUpStackView.distribution = .equalSpacing
+        
         businessStackView.axis = .vertical
         businessStackView.alignment = .leading
-        businessStackView.distribution = .equalSpacing
+        businessStackView.distribution = .fillEqually
         
         businessNameLabel.text = ""
         addressLabel.text = ""
@@ -117,15 +129,19 @@ class HomeViewController: UIViewController {
         businessStackView.addArrangedSubview(addressLabel)
         businessStackView.addArrangedSubview(distanceLabel)
         
-        popUpView.addSubview(businessStackView)
+        businessPopUpStackView.addArrangedSubview(businessImageView)
+        businessPopUpStackView.addArrangedSubview(businessStackView)
+        popUpView.addSubview(businessPopUpStackView)
         
-        businessStackView.translatesAutoresizingMaskIntoConstraints = false
+        businessPopUpStackView.distribution = .fillEqually
+        businessPopUpStackView.spacing = 16
+        businessPopUpStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            businessStackView.topAnchor.constraint(equalTo: popUpView.topAnchor),
-            businessStackView.leadingAnchor.constraint(equalTo: popUpView.leadingAnchor),
-            businessStackView.trailingAnchor.constraint(equalTo: popUpView.trailingAnchor),
-            businessStackView.bottomAnchor.constraint(equalTo: popUpView.bottomAnchor)
+            businessPopUpStackView.topAnchor.constraint(equalTo: popUpView.topAnchor),
+            businessPopUpStackView.leadingAnchor.constraint(equalTo: popUpView.leadingAnchor),
+            businessPopUpStackView.trailingAnchor.constraint(equalTo: popUpView.trailingAnchor),
+            businessPopUpStackView.bottomAnchor.constraint(equalTo: popUpView.bottomAnchor)
         ])
     }
     
@@ -167,7 +183,7 @@ extension HomeViewController: CLLocationManagerDelegate {
                 
                 businessList = []
                 
-                self.retrieveBusinesses(latitude: self.latitude, longitude: self.longitude, category: "food", limit: 5, sortBy: "distance", locale: "en_US") { (response, error) in
+                self.retrieveBusinesses(latitude: self.latitude, longitude: self.longitude, category: "food", limit: 10, sortBy: "distance", locale: "en_US") { (response, error) in
                     
                     if let response = response {
                         businessList = response
@@ -207,6 +223,10 @@ extension HomeViewController: MKMapViewDelegate {
                 distanceLabel.text = roundedDistanceInMiles + " mi"
                 
                 let businessImageUrl = selectedAnnotation?.imageUrl ?? ""
+                let imageView: UIImageView = self.businessImageView
+                imageView.sd_setImage(with: URL(string: businessImageUrl), placeholderImage: nil)
+                
+                print("\(businessImageUrl)")
             }
         } else {
             hidePopUpView()

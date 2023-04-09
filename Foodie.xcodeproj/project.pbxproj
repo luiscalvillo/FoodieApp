@@ -18,6 +18,7 @@
 		A887773B29DFAB610089BC49 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887773A29DFAB610089BC49 /* Business.swift */; };
 		A887773E29E10CE10089BC49 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = A887773D29E10CE10089BC49 /* SDWebImage */; };
 		A887774029E10CE10089BC49 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A887773F29E10CE10089BC49 /* SDWebImageMapKit */; };
+		A887774529E29EB20089BC49 /* BusinessDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887774429E29EB20089BC49 /* BusinessDetailTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		A887773629DF9FB00089BC49 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A887773829DFA7D50089BC49 /* FetchBusinessData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchBusinessData.swift; sourceTree = "<group>"; };
 		A887773A29DFAB610089BC49 /* Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
+		A887774429E29EB20089BC49 /* BusinessDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				A887772429DEA2150089BC49 /* HomeViewController.swift */,
+				A887774429E29EB20089BC49 /* BusinessDetailTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			files = (
 				A887772529DEA2150089BC49 /* HomeViewController.swift in Sources */,
 				A887772129DEA2150089BC49 /* AppDelegate.swift in Sources */,
+				A887774529E29EB20089BC49 /* BusinessDetailTableViewController.swift in Sources */,
 				A887773929DFA7D50089BC49 /* FetchBusinessData.swift in Sources */,
 				A887773B29DFAB610089BC49 /* Business.swift in Sources */,
 				A887772329DEA2150089BC49 /* SceneDelegate.swift in Sources */,

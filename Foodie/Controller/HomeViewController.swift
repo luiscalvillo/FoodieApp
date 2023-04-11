@@ -178,6 +178,7 @@ class HomeViewController: UIViewController {
     func goToBusinessDetailVC() {
         
         let businessDetailVC = BusinessDetailTableViewController()
+        let navVC = UINavigationController(rootViewController: businessDetailVC)
         
         if let businessName = selectedAnnotation?.title {
             businessDetailVC.name = businessName
@@ -202,7 +203,7 @@ class HomeViewController: UIViewController {
             businessDetailVC.imageUrl = businessImageURL
         }
         
-        self.navigationController?.pushViewController(businessDetailVC, animated: true)
+        self.present(navVC, animated: true)
     }
 }
 

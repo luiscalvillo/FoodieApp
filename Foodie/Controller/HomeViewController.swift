@@ -74,6 +74,9 @@ class HomeViewController: UIViewController {
         
         createBusinessPopUpView()
         hidePopUpView()
+        
+        let popUpViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePopUpViewScreenTap(sender:)))
+        popUpView.addGestureRecognizer(popUpViewTapGesture)
     }
     
     func addBusinessesToMap() {
@@ -163,6 +166,44 @@ class HomeViewController: UIViewController {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
+    
+    @objc func handlePopUpViewScreenTap(sender: UITapGestureRecognizer) {
+        goToBusinessDetailVC()
+        print("pop up was pressed")
+    }
+    
+    
+    // MARK: - Navigation
+    
+    func goToBusinessDetailVC() {
+        
+        let businessDetailVC = BusinessDetailTableViewController()
+        
+        if let businessName = selectedAnnotation?.title {
+            businessDetailVC.name = businessName
+        }
+        
+        if let businessAddress = selectedAnnotation?.address {
+            businessDetailVC.address = businessAddress
+        }
+        
+        if let businessDistance = selectedAnnotation?.distance {
+            businessDetailVC.distance = businessDistance
+        }
+        if let businessLatitude = selectedAnnotation?.latitude {
+            businessDetailVC.latitude = businessLatitude
+        }
+        
+        if let businessLongitude = selectedAnnotation?.longitude {
+            businessDetailVC.longitude = businessLongitude
+        }
+        
+        if let businessImageURL = selectedAnnotation?.imageUrl {
+            businessDetailVC.imageUrl = businessImageURL
+        }
+        
+        self.navigationController?.pushViewController(businessDetailVC, animated: true)
+    }
 }
 
 
@@ -225,8 +266,6 @@ extension HomeViewController: MKMapViewDelegate {
                 let businessImageUrl = selectedAnnotation?.imageUrl ?? ""
                 let imageView: UIImageView = self.businessImageView
                 imageView.sd_setImage(with: URL(string: businessImageUrl), placeholderImage: nil)
-                
-                print("\(businessImageUrl)")
             }
         } else {
             hidePopUpView()

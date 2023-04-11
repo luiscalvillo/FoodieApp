@@ -8,26 +8,35 @@
 import UIKit
 
 class BusinessDetailTableViewController: UITableViewController {
+    
+    // MARK: - Properties
+    
+    var name = ""
+    var address = ""
+    var distance = 0.0
+    var latitude = 0.0
+    var longitude = 0.0
+    var imageUrl = ""
+    var isClosed = false
+    
+    var currentLocation = [0.0, 0.0]
+    
+    
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        print("BusinessDetailTableViewController")
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 0
     }
 

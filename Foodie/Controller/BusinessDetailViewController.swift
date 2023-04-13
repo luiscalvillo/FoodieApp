@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import MapKit
 
 class BusinessDetailViewController: UIViewController {
     
@@ -85,9 +86,32 @@ class BusinessDetailViewController: UIViewController {
     
     func createDirectionsButton() {
         directionsButton = UIButton(frame: CGRect(x: 16, y: self.view.frame.size.height - 200, width: self.view.frame.size.width - 32, height: 100))
-        
-        directionsButton.backgroundColor = .blue
+        directionsButton.setTitle("Directions", for: .normal)
+        directionsButton.backgroundColor = UIColor.systemBlue
+        directionsButton.layer.cornerRadius = 16
         
         self.background.addSubview(directionsButton)
+        
+        var tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToAppleMaps(sender:)))
+        directionsButton.addGestureRecognizer(tapGesture)
+    }
+    
+    
+    // MARK: - Navigation
+    
+    @objc
+    func goToAppleMaps(sender: UITapGestureRecognizer) {
+        
+        let source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: currentLocation[0], longitude: currentLocation[1])))
+        let destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)))
+        
+        destination.name = name
+        
+        let yourLocation = CLLocation(latitude: currentLocation[0], longitude: currentLocation[1])
+        let businessLocation = CLLocation(latitude: latitude, longitude: longitude)
+        
+        let distance = businessLocation.distance(from: yourLocation)
+        
+        MKMapItem.openMaps(with: [destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
 }

@@ -169,7 +169,6 @@ class HomeViewController: UIViewController {
     
     @objc func handlePopUpViewScreenTap(sender: UITapGestureRecognizer) {
         goToBusinessDetailVC()
-        print("pop up was pressed")
     }
     
     
@@ -177,7 +176,7 @@ class HomeViewController: UIViewController {
     
     func goToBusinessDetailVC() {
         
-        let businessDetailVC = BusinessDetailTableViewController()
+        let businessDetailVC = BusinessDetailViewController()
         let navVC = UINavigationController(rootViewController: businessDetailVC)
         
         if let businessName = selectedAnnotation?.title {

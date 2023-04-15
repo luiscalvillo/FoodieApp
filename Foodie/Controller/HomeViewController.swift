@@ -121,12 +121,16 @@ class HomeViewController: UIViewController {
         businessStackView.distribution = .fillEqually
         
         businessNameLabel.text = ""
-        addressLabel.text = ""
-        distanceLabel.text = ""
-        
         businessNameLabel.textColor = .black
+        businessNameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        
+        addressLabel.text = ""
         addressLabel.textColor = .black
+        addressLabel.font = UIFont.systemFont(ofSize: 18)
+        
+        distanceLabel.text = ""
         distanceLabel.textColor = .black
+        distanceLabel.font = UIFont.systemFont(ofSize: 16)
         
         businessStackView.addArrangedSubview(businessNameLabel)
         businessStackView.addArrangedSubview(addressLabel)

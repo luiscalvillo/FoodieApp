@@ -53,6 +53,7 @@ class BusinessDetailViewController: UIViewController {
     
     func createBusinessImageView() {
         businessImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width))
+        businessImageView.contentMode = .scaleAspectFill
         
         self.background.addSubview(businessImageView)
         
@@ -70,8 +71,13 @@ class BusinessDetailViewController: UIViewController {
         distanceLabel.text = roundedDistanceInMiles + " mi"
         
         businessNameLabel.textColor = .black
+        businessNameLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        
         addressLabel.textColor = .black
+        addressLabel.font = UIFont.systemFont(ofSize: 20)
+        
         distanceLabel.textColor = .black
+        distanceLabel.font = UIFont.systemFont(ofSize: 16)
         
         businessStackView = UIStackView(frame: CGRect(x: 16, y: self.view.frame.size.width + 16, width: self.view.frame.size.width, height: 150))
         self.background.addSubview(businessStackView)
@@ -87,6 +93,7 @@ class BusinessDetailViewController: UIViewController {
     func createDirectionsButton() {
         directionsButton = UIButton(frame: CGRect(x: 16, y: self.view.frame.size.height - 200, width: self.view.frame.size.width - 32, height: 100))
         directionsButton.setTitle("Directions", for: .normal)
+        directionsButton.titleLabel?.font = UIFont.systemFont(ofSize: 24)
         directionsButton.backgroundColor = UIColor.systemBlue
         directionsButton.layer.cornerRadius = 16
         

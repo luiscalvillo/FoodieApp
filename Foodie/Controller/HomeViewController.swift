@@ -28,8 +28,10 @@ class HomeViewController: UIViewController {
     
     let mapView = MKMapView()
     
+    var popUpView = UIView()
+    
     let businessPopUpStackView = UIStackView()
-    let businessStackView = UIStackView()
+    let businessInformationStackView = UIStackView()
     let businessImageView = UIImageView()
     let businessNameLabel = UILabel()
     let addressLabel = UILabel()
@@ -37,10 +39,8 @@ class HomeViewController: UIViewController {
     
     var isPopUpViewVisible = false
     
-    var popUpView = UIView()
-    
     let margin: CGFloat = 16
-    let popUpViewHeight: CGFloat = 150
+    let popUpViewHeight: CGFloat = 116
     
     
     // MARK: - View Lifecycle
@@ -100,47 +100,52 @@ class HomeViewController: UIViewController {
     func createBusinessPopUpView() {
         
         let width = view.self.frame.width - 32
-        
         let originY: CGFloat = view.frame.height - popUpViewHeight - (margin * 2)
         
+        // Pop Up View
         popUpView = UIView(frame: CGRect(x: margin, y: originY, width: width, height: popUpViewHeight))
-        popUpView.layer.cornerRadius = 32
+        popUpView.layer.cornerRadius = 16
         popUpView.clipsToBounds = true
         popUpView.backgroundColor = .white
         self.view.addSubview(popUpView)
         
+        // Image
         businessImageView.contentMode = .scaleAspectFill
-        businessImageView.frame.size.width = 50
-        
-        businessPopUpStackView.axis = .horizontal
-        businessPopUpStackView.alignment = .leading
-        businessPopUpStackView.distribution = .equalSpacing
-        
-        businessStackView.axis = .vertical
-        businessStackView.alignment = .leading
-        businessStackView.distribution = .fillEqually
-        
+        businessImageView.frame.size.width = 116
+        businessImageView.widthAnchor.constraint(equalToConstant: 116).isActive = true
+        businessImageView.clipsToBounds = true 
+
+        // Name
         businessNameLabel.text = ""
         businessNameLabel.textColor = .black
         businessNameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         
+        // Address
         addressLabel.text = ""
         addressLabel.textColor = .black
         addressLabel.font = UIFont.systemFont(ofSize: 18)
         
+        // Distance
         distanceLabel.text = ""
         distanceLabel.textColor = .black
         distanceLabel.font = UIFont.systemFont(ofSize: 16)
         
-        businessStackView.addArrangedSubview(businessNameLabel)
-        businessStackView.addArrangedSubview(addressLabel)
-        businessStackView.addArrangedSubview(distanceLabel)
+        businessInformationStackView.addArrangedSubview(businessNameLabel)
+        businessInformationStackView.addArrangedSubview(addressLabel)
+        businessInformationStackView.addArrangedSubview(distanceLabel)
         
+        // Business Information Stack View
+        businessInformationStackView.axis = .vertical
+        businessInformationStackView.alignment = .fill
+        businessInformationStackView.distribution = .fillEqually
         businessPopUpStackView.addArrangedSubview(businessImageView)
-        businessPopUpStackView.addArrangedSubview(businessStackView)
+        businessPopUpStackView.addArrangedSubview(businessInformationStackView)
         popUpView.addSubview(businessPopUpStackView)
         
-        businessPopUpStackView.distribution = .fillEqually
+        // Business Pop Up Stack View
+        businessPopUpStackView.axis = .horizontal
+        businessPopUpStackView.alignment = .fill
+        businessPopUpStackView.distribution = .fill
         businessPopUpStackView.spacing = 16
         businessPopUpStackView.translatesAutoresizingMaskIntoConstraints = false
         

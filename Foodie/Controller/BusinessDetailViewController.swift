@@ -29,7 +29,7 @@ class BusinessDetailViewController: UIViewController {
     var addressLabel = UILabel()
     var distanceLabel = UILabel()
     
-    var businessStackView = UIStackView()
+    var businessInformationStackView = UIStackView()
     var background = UIView()
     var directionsButton = UIButton()
     
@@ -79,15 +79,15 @@ class BusinessDetailViewController: UIViewController {
         distanceLabel.textColor = .black
         distanceLabel.font = UIFont.systemFont(ofSize: 16)
         
-        businessStackView = UIStackView(frame: CGRect(x: 16, y: self.view.frame.size.width + 16, width: self.view.frame.size.width, height: 150))
-        self.background.addSubview(businessStackView)
+        businessInformationStackView = UIStackView(frame: CGRect(x: 16, y: self.view.frame.size.width + 16, width: self.view.frame.size.width, height: 150))
+        self.background.addSubview(businessInformationStackView)
         
-        businessStackView.axis = .vertical
-        businessStackView.distribution = .fillProportionally
+        businessInformationStackView.axis = .vertical
+        businessInformationStackView.distribution = .fill
         
-        businessStackView.addArrangedSubview(businessNameLabel)
-        businessStackView.addArrangedSubview(addressLabel)
-        businessStackView.addArrangedSubview(distanceLabel)
+        businessInformationStackView.addArrangedSubview(businessNameLabel)
+        businessInformationStackView.addArrangedSubview(addressLabel)
+        businessInformationStackView.addArrangedSubview(distanceLabel)
     }
     
     func createDirectionsButton() {
@@ -99,7 +99,7 @@ class BusinessDetailViewController: UIViewController {
         
         self.background.addSubview(directionsButton)
         
-        var tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToAppleMaps(sender:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToAppleMaps(sender:)))
         directionsButton.addGestureRecognizer(tapGesture)
     }
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A825603029EBD3CA009835B4 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = A825602F29EBD3CA009835B4 /* SDWebImage */; };
 		A887772129DEA2150089BC49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772029DEA2150089BC49 /* AppDelegate.swift */; };
 		A887772329DEA2150089BC49 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772229DEA2150089BC49 /* SceneDelegate.swift */; };
 		A887772529DEA2150089BC49 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772429DEA2150089BC49 /* HomeViewController.swift */; };
@@ -16,8 +17,6 @@
 		A887773729DF9FB00089BC49 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887773629DF9FB00089BC49 /* Extensions.swift */; };
 		A887773929DFA7D50089BC49 /* FetchBusinessData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887773829DFA7D50089BC49 /* FetchBusinessData.swift */; };
 		A887773B29DFAB610089BC49 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887773A29DFAB610089BC49 /* Business.swift */; };
-		A887773E29E10CE10089BC49 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = A887773D29E10CE10089BC49 /* SDWebImage */; };
-		A887774029E10CE10089BC49 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A887773F29E10CE10089BC49 /* SDWebImageMapKit */; };
 		A887774529E29EB20089BC49 /* BusinessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887774429E29EB20089BC49 /* BusinessDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,8 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A887774029E10CE10089BC49 /* SDWebImageMapKit in Frameworks */,
-				A887773E29E10CE10089BC49 /* SDWebImage in Frameworks */,
+				A825603029EBD3CA009835B4 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,8 +114,7 @@
 			);
 			name = Foodie;
 			packageProductDependencies = (
-				A887773D29E10CE10089BC49 /* SDWebImage */,
-				A887773F29E10CE10089BC49 /* SDWebImageMapKit */,
+				A825602F29EBD3CA009835B4 /* SDWebImage */,
 			);
 			productName = Foodie;
 			productReference = A887771D29DEA2150089BC49 /* Foodie.app */;
@@ -148,7 +145,7 @@
 			);
 			mainGroup = A887771429DEA2150089BC49;
 			packageReferences = (
-				A887773C29E10CE10089BC49 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				A825602E29EBD3CA009835B4 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = A887771E29DEA2150089BC49 /* Products */;
 			projectDirPath = "";
@@ -409,7 +406,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A887773C29E10CE10089BC49 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+		A825602E29EBD3CA009835B4 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
 			requirement = {
@@ -420,15 +417,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A887773D29E10CE10089BC49 /* SDWebImage */ = {
+		A825602F29EBD3CA009835B4 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A887773C29E10CE10089BC49 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			package = A825602E29EBD3CA009835B4 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
-		};
-		A887773F29E10CE10089BC49 /* SDWebImageMapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A887773C29E10CE10089BC49 /* XCRemoteSwiftPackageReference "SDWebImage" */;
-			productName = SDWebImageMapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

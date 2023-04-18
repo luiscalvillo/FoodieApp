@@ -19,8 +19,6 @@ class BusinessDetailViewController: UIViewController {
     var latitude = 0.0
     var longitude = 0.0
     var imageUrl = ""
-    var isClosed = false
-    
     var currentLocation = [0.0, 0.0]
     
     var businessImageView = UIImageView()
@@ -32,6 +30,7 @@ class BusinessDetailViewController: UIViewController {
     var businessInformationStackView = UIStackView()
     var background = UIView()
     var directionsButton = UIButton()
+    let mapView = MKMapView()
     
     
     // MARK: - View Lifecycle
@@ -42,7 +41,44 @@ class BusinessDetailViewController: UIViewController {
         createBackgroundView()
         createBusinessImageView()
         createBusinessInformationView()
+        createMapView()
+        showMapLocationFromCoordinates()
         createDirectionsButton()
+    }
+    
+    func createMapView() {
+        let mapWidth = view.frame.size.width - 32
+        let mapHeight: CGFloat = 150
+        
+        mapView.frame = CGRect(x: 16, y: self.view.frame.maxY - mapHeight - (mapHeight / 2), width: mapWidth, height: mapHeight)
+        mapView.layer.cornerRadius = 16
+        self.view.addSubview(mapView)
+    }
+    
+    func showMapLocationFromCoordinates() {
+        
+        var region = MKCoordinateRegion()
+        
+        region.center.latitude = latitude
+        region.center.longitude = longitude
+        
+        region.span.latitudeDelta = 0.001
+        region.span.longitudeDelta = 0.001
+        
+        self.mapView.setRegion(region, animated: true)
+        self.mapView.showsUserLocation = true
+        
+        mapView.isPitchEnabled = false
+        mapView.isZoomEnabled = false
+        mapView.isScrollEnabled = false
+        mapView.isRotateEnabled = false
+        
+        let annotation = MKPointAnnotation()
+        
+        annotation.coordinate.latitude = latitude
+        annotation.coordinate.longitude = longitude
+        
+        self.mapView.addAnnotation(annotation)
     }
     
     func createBackgroundView() {
@@ -54,6 +90,7 @@ class BusinessDetailViewController: UIViewController {
     func createBusinessImageView() {
         businessImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width))
         businessImageView.contentMode = .scaleAspectFill
+        businessImageView.clipsToBounds = true
         
         self.background.addSubview(businessImageView)
         
@@ -62,28 +99,31 @@ class BusinessDetailViewController: UIViewController {
     }
     
     func createBusinessInformationView() {
-        businessNameLabel.text = name
-        addressLabel.text = address
         
+        // Business Name
+        businessNameLabel.text = name
+        businessNameLabel.textColor = .black
+        businessNameLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        
+        // Address
+        addressLabel.text = address
+        addressLabel.textColor = .black
+        addressLabel.font = UIFont.systemFont(ofSize: 20)
+        
+        // Distance
         let businessDistanceInMiles = distance.getMiles()
         let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles * 100) / 100)
         
         distanceLabel.text = roundedDistanceInMiles + " mi"
-        
-        businessNameLabel.textColor = .black
-        businessNameLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        
-        addressLabel.textColor = .black
-        addressLabel.font = UIFont.systemFont(ofSize: 20)
-        
         distanceLabel.textColor = .black
         distanceLabel.font = UIFont.systemFont(ofSize: 16)
         
-        businessInformationStackView = UIStackView(frame: CGRect(x: 16, y: self.view.frame.size.width + 16, width: self.view.frame.size.width, height: 150))
+        // Information Stack View
+        businessInformationStackView = UIStackView(frame: CGRect(x: 16, y: self.view.frame.size.width, width: self.view.frame.size.width, height: 100))
         self.background.addSubview(businessInformationStackView)
         
         businessInformationStackView.axis = .vertical
-        businessInformationStackView.distribution = .fill
+        businessInformationStackView.distribution = .fillEqually
         
         businessInformationStackView.addArrangedSubview(businessNameLabel)
         businessInformationStackView.addArrangedSubview(addressLabel)
@@ -91,7 +131,8 @@ class BusinessDetailViewController: UIViewController {
     }
     
     func createDirectionsButton() {
-        directionsButton = UIButton(frame: CGRect(x: 16, y: self.view.frame.size.height - 200, width: self.view.frame.size.width - 32, height: 100))
+        
+        directionsButton = UIButton(frame: CGRect(x: 16, y: mapView.frame.origin.y - 100, width: self.view.frame.size.width - 32, height: 60))
         directionsButton.setTitle("Directions", for: .normal)
         directionsButton.titleLabel?.font = UIFont.systemFont(ofSize: 24)
         directionsButton.backgroundColor = UIColor.systemBlue
@@ -109,16 +150,13 @@ class BusinessDetailViewController: UIViewController {
     @objc
     func goToAppleMaps(sender: UITapGestureRecognizer) {
         
-        let source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: currentLocation[0], longitude: currentLocation[1])))
         let destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)))
         
         destination.name = name
         
         let yourLocation = CLLocation(latitude: currentLocation[0], longitude: currentLocation[1])
         let businessLocation = CLLocation(latitude: latitude, longitude: longitude)
-        
-        let distance = businessLocation.distance(from: yourLocation)
-        
+                
         MKMapItem.openMaps(with: [destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
 }

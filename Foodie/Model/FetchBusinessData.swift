@@ -69,8 +69,8 @@ extension HomeViewController {
                     
                     place.coordinates = coordinates
                     
-                    place.latitude = coordinates!["latitude"] as! Double
-                    place.longitude = coordinates!["longitude"] as! Double
+                    place.latitude = coordinates?["latitude"] as? Double
+                    place.longitude = coordinates?["longitude"] as? Double
                     place.isClosed = business.value(forKey: "is_closed") as? Bool
                     place.hours = business.value(forKey: "hours") as? [String : Any]
                     place.isOpenNow = business.value(forKeyPath: "hours.is_open_now") as? Bool

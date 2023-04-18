@@ -27,7 +27,6 @@ class HomeViewController: UIViewController {
     var selectedAnnotation: CustomPointAnnotation?
     
     let mapView = MKMapView()
-    
     var popUpView = UIView()
     
     let businessPopUpStackView = UIStackView()
@@ -113,8 +112,8 @@ class HomeViewController: UIViewController {
         businessImageView.contentMode = .scaleAspectFill
         businessImageView.frame.size.width = 116
         businessImageView.widthAnchor.constraint(equalToConstant: 116).isActive = true
-        businessImageView.clipsToBounds = true 
-
+        businessImageView.clipsToBounds = true
+        
         // Name
         businessNameLabel.text = ""
         businessNameLabel.textColor = .black

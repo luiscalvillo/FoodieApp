@@ -40,7 +40,7 @@ class HomeViewController: UIViewController {
     
     let margin: CGFloat = 16
     let popUpViewHeight: CGFloat = 116
-    
+        
     
     // MARK: - View Lifecycle
     
@@ -57,10 +57,26 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let mapWidth = view.frame.size.width
-        let mapHeight = view.frame.size.height
+        configureMapView()
+        configureSegmentedControl()
+        createBusinessPopUpView()
+        hidePopUpView()
         
-        mapView.frame = CGRect(x: 0, y: 0, width: mapWidth, height: mapHeight)
+        let popUpViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePopUpViewScreenTap(sender:)))
+        popUpView.addGestureRecognizer(popUpViewTapGesture)
+    }
+    
+    func configureMapView() {
+        view.addSubview(mapView)
+        
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            mapView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        ])
         
         mapView.mapType = MKMapType.standard
         mapView.isZoomEnabled = true
@@ -68,14 +84,6 @@ class HomeViewController: UIViewController {
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         mapView.center = view.center
-        
-        view.addSubview(mapView)
-        
-        createBusinessPopUpView()
-        hidePopUpView()
-        
-        let popUpViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePopUpViewScreenTap(sender:)))
-        popUpView.addGestureRecognizer(popUpViewTapGesture)
     }
     
     func addBusinessesToMap() {
@@ -179,6 +187,24 @@ class HomeViewController: UIViewController {
         goToBusinessDetailVC()
     }
     
+    func configureSegmentedControl() {
+        
+        let segmentItems = ["Map", "List"]
+        let segmentedControl = UISegmentedControl(items: segmentItems)
+        
+        segmentedControl.selectedSegmentIndex = 1
+        mapView.addSubview(segmentedControl)
+        
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            segmentedControl.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 100),
+            segmentedControl.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
+            segmentedControl.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
+            segmentedControl.heightAnchor.constraint(equalToConstant: 60)
+        ])
+    }
+    
     
     // MARK: - Navigation
     
@@ -233,7 +259,6 @@ extension HomeViewController: CLLocationManagerDelegate {
                 businessList = []
                 
                 self.retrieveBusinesses(latitude: self.latitude, longitude: self.longitude, category: "food", limit: 10, sortBy: "distance", locale: "en_US") { (response, error) in
-                    
                     if let response = response {
                         businessList = response
                         DispatchQueue.main.async { [self] in

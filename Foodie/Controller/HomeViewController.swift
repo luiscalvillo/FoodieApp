@@ -40,6 +40,13 @@ class HomeViewController: UIViewController {
     
     let margin: CGFloat = 16
     let popUpViewHeight: CGFloat = 116
+    
+    var tableView = UITableView()
+    
+    var mapViewIsVisible = true
+    var listViewIsVisible = true
+    
+    var segmentedControl = UISegmentedControl()
         
     
     // MARK: - View Lifecycle
@@ -52,10 +59,24 @@ class HomeViewController: UIViewController {
         locationManager?.delegate = self
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.requestWhenInUseAuthorization()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        UIView.animate(withDuration: 0.5) {
+            
+            if self.mapViewIsVisible == true {
+                self.mapView.alpha = 1
+                self.tableView.alpha = 0
+            } else {
+                self.mapView.alpha = 0
+                self.tableView.alpha = 1
+            }
+        }
         
         configureMapView()
         configureSegmentedControl()
@@ -190,7 +211,8 @@ class HomeViewController: UIViewController {
     func configureSegmentedControl() {
         
         let segmentItems = ["Map", "List"]
-        let segmentedControl = UISegmentedControl(items: segmentItems)
+        segmentedControl = UISegmentedControl(items: segmentItems)
+        segmentedControl.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
         
         segmentedControl.selectedSegmentIndex = 1
         mapView.addSubview(segmentedControl)
@@ -203,6 +225,28 @@ class HomeViewController: UIViewController {
             segmentedControl.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
             segmentedControl.heightAnchor.constraint(equalToConstant: 60)
         ])
+    }
+    
+    @objc
+    func valueChanged(_ sender: UISegmentedControl) {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            UIView.animate(withDuration: 0.5) {
+                self.mapView.alpha = 1
+                self.tableView.alpha = 0
+                self.mapViewIsVisible = true
+                self.listViewIsVisible = false
+            }
+        case 1:
+            UIView.animate(withDuration: 0.5) {
+                self.mapView.alpha = 0
+                self.tableView.alpha = 1
+                self.mapViewIsVisible = false
+                self.listViewIsVisible = true
+            }
+        default:
+            break
+        }
     }
     
     
@@ -242,6 +286,69 @@ class HomeViewController: UIViewController {
 
 
 // MARK: - Extensions
+
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+         return businessList.count
+    }
+        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: BusinessCell.reuseID, for: indexPath) as! BusinessCell
+        let business = businessList[indexPath.row]
+        
+        cell.nameLabel.text = business.name
+        cell.addressLabel.text = business.address
+        cell.distanceLabel.text = "\(String(describing: business.distance?.getMiles())) mi"
+
+        let businessDistanceInMiles = business.distance!.getMiles()
+        let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles * 100) / 100)
+        
+        cell.distanceLabel.text = roundedDistanceInMiles + " mi"
+        
+        let businessImageUrl = businessList[indexPath.row].imageURL
+        let imageView: UIImageView = cell.businessImageView
+    
+        imageView.sd_setImage(with: URL(string: businessImageUrl!), placeholderImage: nil)
+        
+        return cell
+     }
+     
+     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+         return 148
+     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let businessDetailVC = storyboard.instantiateViewController(withIdentifier: "BusinessDetailViewController") as! BusinessDetailViewController
+        
+        let business = businessList[indexPath.row]
+        
+        if let businessName = business.name {
+            businessDetailVC.name = businessName
+        }
+        
+        if let businessAddress = business.address {
+            businessDetailVC.address = businessAddress
+        }
+        
+        if let businessDistance = business.distance {
+            businessDetailVC.distance = businessDistance
+        }
+        if let businessLatitude = business.latitude {
+            businessDetailVC.latitude = businessLatitude
+        }
+        
+        if let businessLongitude = business.longitude {
+            businessDetailVC.longitude = businessLongitude
+        }
+        
+        if let businessImageURL = business.imageURL {
+            businessDetailVC.imageUrl = businessImageURL
+        }
+
+        self.navigationController?.pushViewController(businessDetailVC, animated: true)
+    }
+}
 
 extension HomeViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

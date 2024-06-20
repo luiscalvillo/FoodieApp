@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A825603029EBD3CA009835B4 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = A825602F29EBD3CA009835B4 /* SDWebImage */; };
+		A833C83F2C2183EF00491C88 /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A833C83E2C2183EF00491C88 /* BusinessCell.swift */; };
 		A887772129DEA2150089BC49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772029DEA2150089BC49 /* AppDelegate.swift */; };
 		A887772329DEA2150089BC49 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772229DEA2150089BC49 /* SceneDelegate.swift */; };
 		A887772529DEA2150089BC49 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772429DEA2150089BC49 /* HomeViewController.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A833C83E2C2183EF00491C88 /* BusinessCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
 		A887771D29DEA2150089BC49 /* Foodie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Foodie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A887772029DEA2150089BC49 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A887772229DEA2150089BC49 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +49,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A833C8402C2183F400491C88 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A833C83E2C2183EF00491C88 /* BusinessCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A887771429DEA2150089BC49 = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +79,7 @@
 				A887772029DEA2150089BC49 /* AppDelegate.swift */,
 				A887772229DEA2150089BC49 /* SceneDelegate.swift */,
 				A887773529DF9F7E0089BC49 /* Model */,
+				A833C8402C2183F400491C88 /* View */,
 				A887773429DF9F620089BC49 /* Controller */,
 				A887772629DEA2150089BC49 /* Main.storyboard */,
 				A887772929DEA2160089BC49 /* Assets.xcassets */,
@@ -175,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A887772529DEA2150089BC49 /* HomeViewController.swift in Sources */,
+				A833C83F2C2183EF00491C88 /* BusinessCell.swift in Sources */,
 				A887772129DEA2150089BC49 /* AppDelegate.swift in Sources */,
 				A887774529E29EB20089BC49 /* BusinessDetailViewController.swift in Sources */,
 				A887773929DFA7D50089BC49 /* FetchBusinessData.swift in Sources */,

@@ -62,6 +62,11 @@ class HomeViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        self.title = "Foodie"
+        
+        navigationController?.setNavigationBarHidden(false, animated: false )
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -214,7 +219,7 @@ class HomeViewController: UIViewController {
         segmentedControl = UISegmentedControl(items: segmentItems)
         segmentedControl.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
         
-        segmentedControl.selectedSegmentIndex = 1
+        segmentedControl.selectedSegmentIndex = 0
         mapView.addSubview(segmentedControl)
         
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false

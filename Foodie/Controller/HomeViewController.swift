@@ -73,7 +73,6 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         UIView.animate(withDuration: 0.5) {
-            
             if self.mapViewIsVisible == true {
                 self.mapView.alpha = 1
                 self.tableView.alpha = 0
@@ -85,6 +84,7 @@ class HomeViewController: UIViewController {
         
         configureMapView()
         configureSegmentedControl()
+        configureTableView()
         createBusinessPopUpView()
         hidePopUpView()
         
@@ -220,14 +220,14 @@ class HomeViewController: UIViewController {
         segmentedControl.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
         
         segmentedControl.selectedSegmentIndex = 0
-        mapView.addSubview(segmentedControl)
+        view.addSubview(segmentedControl)
         
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            segmentedControl.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 100),
-            segmentedControl.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 0),
-            segmentedControl.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: 0),
+            segmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             segmentedControl.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
@@ -252,6 +252,19 @@ class HomeViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    func configureTableView() {
+        view.addSubview(tableView)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 0),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        ])
     }
     
     

@@ -123,7 +123,9 @@ class HomeViewController: UIViewController {
             customPointAnnotation.distance = business.distance
             customPointAnnotation.isClosed = business.isClosed
             
-            if let lat = business.coordinates!["latitude"], let lon = business.coordinates!["longitude"] {
+            if let coordinates = business.coordinates,
+               let lat = coordinates["latitude"],
+               let lon = coordinates["longitude"] {
                 customPointAnnotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                 mapView.addAnnotation(customPointAnnotation)
             }

@@ -23,47 +23,60 @@ class BusinessCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        businessImageView.layer.cornerRadius = businessImageView.frame.size.width/2
-        businessImageView.clipsToBounds = true
-        
-        cellView.addSubview(stackView)
-        stackView = UIStackView(arrangedSubviews: [businessImageView, informationStackView])
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo:  cellView.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor),
-            stackView.heightAnchor.constraint(equalToConstant: 100)
-        ])
-        
-        
-        // info stackview
-        
-        informationStackView = UIStackView(arrangedSubviews: [nameLabel, addressLabel, distanceLabel])
-        informationStackView.axis = .vertical
-        informationStackView.distribution = .fillEqually
-        
-        stackView.addSubview(stackView)
-        
-        informationStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            informationStackView.topAnchor.constraint(equalTo:  stackView.topAnchor),
-            informationStackView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            informationStackView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-        ])
+        setupCellView()
+        setupStackView()
+        setupInformationStackView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupCellView() {
+        cellView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(cellView)
+        
+        NSLayoutConstraint.activate([
+            cellView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            cellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            cellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+    }
+    
+    private func setupStackView() {
+        businessImageView.layer.cornerRadius = 25
+        businessImageView.clipsToBounds = true
+        businessImageView.translatesAutoresizingMaskIntoConstraints = false
+        businessImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        businessImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        stackView = UIStackView(arrangedSubviews: [businessImageView, informationStackView])
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        cellView.addSubview(stackView)
+        
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: cellView.topAnchor, constant: 10),
+            stackView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor, constant: 10),
+            stackView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor, constant: -10),
+            stackView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: -10)
+        ])
+    }
+    
+    private func setupInformationStackView() {
+        informationStackView = UIStackView(arrangedSubviews: [nameLabel, addressLabel, distanceLabel])
+        informationStackView.axis = .vertical
+        informationStackView.distribution = .fillEqually
+        informationStackView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
     }
 }

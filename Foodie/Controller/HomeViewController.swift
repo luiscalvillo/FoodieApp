@@ -63,6 +63,8 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.register(BusinessCell.self, forCellReuseIdentifier: BusinessCell.reuseID)
+        
         self.title = "Foodie"
         
         navigationController?.setNavigationBarHidden(false, animated: false )
@@ -257,6 +259,8 @@ class HomeViewController: UIViewController {
     }
     
     func configureTableView() {
+        
+        tableView.backgroundColor = .red //  
         view.addSubview(tableView)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -338,8 +342,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
      }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let businessDetailVC = storyboard.instantiateViewController(withIdentifier: "BusinessDetailViewController") as! BusinessDetailViewController
+        let businessDetailVC = BusinessDetailViewController()
         
         let business = businessList[indexPath.row]
         
@@ -389,6 +392,7 @@ extension HomeViewController: CLLocationManagerDelegate {
                     if let response = response {
                         businessList = response
                         DispatchQueue.main.async { [self] in
+                            self.tableView.reloadData()
                             self.addBusinessesToMap()
                         }
                     }

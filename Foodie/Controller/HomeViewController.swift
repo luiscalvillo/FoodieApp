@@ -42,9 +42,9 @@ class HomeViewController: UIViewController {
     let popUpViewHeight: CGFloat = 116
     
     var tableView = UITableView()
-    
+
     var mapViewIsVisible = true
-    var listViewIsVisible = true
+    var listViewIsVisible = false
     
     var segmentedControl = UISegmentedControl()
         
@@ -252,6 +252,10 @@ class HomeViewController: UIViewController {
                 self.tableView.alpha = 1
                 self.mapViewIsVisible = false
                 self.listViewIsVisible = true
+                
+                if self.isPopUpViewVisible {
+                    self.hidePopUpView()
+                }
             }
         default:
             break
@@ -260,7 +264,6 @@ class HomeViewController: UIViewController {
     
     func configureTableView() {
         
-        tableView.backgroundColor = .red //  
         view.addSubview(tableView)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -271,6 +274,8 @@ class HomeViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
+        
+      
     }
     
     
@@ -414,7 +419,9 @@ extension HomeViewController: MKMapViewDelegate {
         
         if isPopUpViewVisible == false {
             
-            showPopUpView()
+            if mapViewIsVisible {
+                showPopUpView()
+            }
             
             if view .isKind(of: MKUserLocation.self) {
                 

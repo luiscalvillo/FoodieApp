@@ -66,7 +66,7 @@ class HomeViewController: UIViewController {
         tableView.register(BusinessCell.self, forCellReuseIdentifier: BusinessCell.reuseID)
         
         self.title = "Foodie"
-        
+        self.view.backgroundColor = .white
         navigationController?.setNavigationBarHidden(false, animated: false )
         
     }
@@ -84,8 +84,8 @@ class HomeViewController: UIViewController {
             }
         }
         
-        configureMapView()
         configureSegmentedControl()
+        configureMapView()
         configureTableView()
         createBusinessPopUpView()
         hidePopUpView()
@@ -100,7 +100,7 @@ class HomeViewController: UIViewController {
         mapView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            mapView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 0),
             mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
@@ -274,8 +274,6 @@ class HomeViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
-        
-      
     }
     
     

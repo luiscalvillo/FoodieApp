@@ -39,7 +39,7 @@ class HomeViewController: UIViewController {
     var isPopUpViewVisible = false
     
     let margin: CGFloat = 16
-    let popUpViewHeight: CGFloat = 116
+    let popUpViewHeight: CGFloat = 150
     
     var tableView = UITableView()
 
@@ -136,11 +136,11 @@ class HomeViewController: UIViewController {
     
     func createBusinessPopUpView() {
         
-        let width = view.self.frame.width - 32
-        let originY: CGFloat = view.frame.height - popUpViewHeight - (margin * 2)
+        let width = view.self.frame.width
+        let originY: CGFloat = view.frame.height - popUpViewHeight
         
         // Pop Up View
-        popUpView = UIView(frame: CGRect(x: margin, y: originY, width: width, height: popUpViewHeight))
+        popUpView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: popUpViewHeight))
         popUpView.layer.cornerRadius = 16
         popUpView.clipsToBounds = true
         popUpView.backgroundColor = .white
@@ -148,8 +148,8 @@ class HomeViewController: UIViewController {
         
         // Image
         businessImageView.contentMode = .scaleAspectFill
-        businessImageView.frame.size.width = 116
-        businessImageView.widthAnchor.constraint(equalToConstant: 116).isActive = true
+        businessImageView.frame.size.width = 150
+        businessImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
         businessImageView.clipsToBounds = true
         
         // Name
@@ -174,7 +174,7 @@ class HomeViewController: UIViewController {
         // Business Information Stack View
         businessInformationStackView.axis = .vertical
         businessInformationStackView.alignment = .fill
-        businessInformationStackView.distribution = .fillEqually
+        businessInformationStackView.distribution = .fillProportionally
         businessPopUpStackView.addArrangedSubview(businessImageView)
         businessPopUpStackView.addArrangedSubview(businessInformationStackView)
         popUpView.addSubview(businessPopUpStackView)
@@ -199,7 +199,7 @@ class HomeViewController: UIViewController {
         isPopUpViewVisible = true
         
         UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 2.0, options: .curveEaseIn, animations: {
-            self.popUpView.frame.origin.y = self.view.frame.height - self.popUpViewHeight - (self.margin * 2)
+            self.popUpView.frame.origin.y = self.view.frame.height - self.popUpViewHeight
         }, completion: nil)
     }
     

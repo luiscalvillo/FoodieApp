@@ -155,6 +155,7 @@ class HomeViewController: UIViewController {
         // Name
         businessNameLabel.text = ""
         businessNameLabel.textColor = .black
+        businessNameLabel.textColor = .black
         businessNameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         
         // Address
@@ -307,6 +308,12 @@ class HomeViewController: UIViewController {
             businessDetailVC.imageUrl = businessImageURL
         }
         
+        if let businessRating = selectedAnnotation?.rating {
+            businessDetailVC.businessRating =  businessRating
+            
+            print("rating: \(businessRating)")
+        }
+        
         self.present(navVC, animated: true)
     }
 }
@@ -370,6 +377,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let businessImageURL = business.imageURL {
             businessDetailVC.imageUrl = businessImageURL
+        }
+        
+        if let businessRating = business.rating {
+            businessDetailVC.businessRating = businessRating
         }
 
         self.navigationController?.pushViewController(businessDetailVC, animated: true)
@@ -452,5 +463,6 @@ class CustomPointAnnotation: MKPointAnnotation {
     var longitude: Double!
     var distance: Double!
     var isClosed: Bool!
+    var rating: Double!
     var hours: [String : Any]!
 }

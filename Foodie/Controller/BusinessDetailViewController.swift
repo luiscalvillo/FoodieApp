@@ -19,6 +19,7 @@ class BusinessDetailViewController: UIViewController {
     var latitude = 0.0
     var longitude = 0.0
     var imageUrl = ""
+    var businessRating = 0.0
     var currentLocation = [0.0, 0.0]
     
     var businessImageView = UIImageView()
@@ -26,7 +27,8 @@ class BusinessDetailViewController: UIViewController {
     var businessNameLabel = UILabel()
     var addressLabel = UILabel()
     var distanceLabel = UILabel()
-    
+    var ratingLabel = UILabel()
+  
     var businessInformationStackView = UIStackView()
     var background = UIView()
     var directionsButton = UIButton()
@@ -105,6 +107,11 @@ class BusinessDetailViewController: UIViewController {
         businessNameLabel.textColor = .black
         businessNameLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         
+        // Rating
+        ratingLabel.text = "\(businessRating)"
+        ratingLabel.textColor = .black
+        ratingLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        
         // Address
         addressLabel.text = address
         addressLabel.textColor = .black
@@ -126,8 +133,11 @@ class BusinessDetailViewController: UIViewController {
         businessInformationStackView.distribution = .fillEqually
         
         businessInformationStackView.addArrangedSubview(businessNameLabel)
+        businessInformationStackView.addArrangedSubview(ratingLabel)
         businessInformationStackView.addArrangedSubview(addressLabel)
         businessInformationStackView.addArrangedSubview(distanceLabel)
+        
+        print("Rating: \(businessRating)")
     }
     
     func createDirectionsButton() {

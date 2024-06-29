@@ -74,10 +74,11 @@ extension HomeViewController {
                     place.isClosed = business.value(forKey: "is_closed") as? Bool
                     place.hours = business.value(forKey: "hours") as? [String : Any]
                     place.isOpenNow = business.value(forKeyPath: "hours.is_open_now") as? Bool
+                    place.rating = business.value(forKey: "rating") as? Double
                     
                     businessList.append(place)
                 }
-                
+              
                 completionHandler(businessList, nil)
             } catch {
                 print("Caught error")

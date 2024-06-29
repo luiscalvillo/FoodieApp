@@ -18,6 +18,7 @@ struct Business {
     var longitude: Double?
     var isClosed: Bool?
     var isOpenNow: Bool?
+    var rating: Double?
     
     var coordinates: [String : Double]?
     var hours: [String : Any]?

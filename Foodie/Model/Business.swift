@@ -5,7 +5,7 @@
 //  Created by Luis Calvillo on 4/6/23.
 //
 
-import Foundation
+import UIKit
 
 struct Business {
     var name: String?

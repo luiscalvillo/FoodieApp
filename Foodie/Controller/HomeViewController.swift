@@ -35,6 +35,8 @@ class HomeViewController: UIViewController {
     let businessNameLabel = UILabel()
     let addressLabel = UILabel()
     let distanceLabel = UILabel()
+    var ratingLabel = UILabel()
+    var ratingLabelText = ""
     
     var isPopUpViewVisible = false
     
@@ -124,6 +126,7 @@ class HomeViewController: UIViewController {
             customPointAnnotation.longitude = business.longitude
             customPointAnnotation.distance = business.distance
             customPointAnnotation.isClosed = business.isClosed
+            customPointAnnotation.rating = business.rating
             
             if let coordinates = business.coordinates,
                let lat = coordinates["latitude"],
@@ -169,6 +172,7 @@ class HomeViewController: UIViewController {
         distanceLabel.font = UIFont.systemFont(ofSize: 16)
         
         businessInformationStackView.addArrangedSubview(businessNameLabel)
+        businessInformationStackView.addArrangedSubview(ratingLabel)
         businessInformationStackView.addArrangedSubview(addressLabel)
         businessInformationStackView.addArrangedSubview(distanceLabel)
         
@@ -276,6 +280,34 @@ class HomeViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
     }
+    
+    func createStarRatings(rating: Double?) -> String {
+        switch rating {
+        case 1.0:
+            ratingLabelText = "⭐️"
+        case 1.5:
+            ratingLabelText = "⭐️✨"
+        case 2.0:
+            ratingLabelText = "⭐️⭐️"
+        case 2.5:
+            ratingLabelText = "⭐️⭐️✨"
+        case 3.0:
+            ratingLabelText = "⭐️⭐️⭐️"
+        case 3.5:
+            ratingLabelText = "⭐️⭐️⭐️✨"
+        case 4.0:
+            ratingLabelText = "⭐️⭐️⭐️⭐️"
+        case 4.5:
+            ratingLabelText = "⭐️⭐️⭐️⭐️✨"
+        case 5.0:
+            ratingLabelText = "⭐️⭐️⭐️⭐️⭐️"
+        default:
+            ratingLabelText = "⭐️⭐️⭐️⭐️⭐️"
+        }
+        
+        return ratingLabelText
+    }
+    
     
     
     // MARK: - Navigation
@@ -442,6 +474,7 @@ extension HomeViewController: MKMapViewDelegate {
                 let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles! * 100) / 100)
                 
                 distanceLabel.text = roundedDistanceInMiles + " mi"
+                ratingLabel.text = createStarRatings(rating: selectedAnnotation?.rating)
                 
                 let businessImageUrl = selectedAnnotation?.imageUrl ?? ""
                 let imageView: UIImageView = self.businessImageView

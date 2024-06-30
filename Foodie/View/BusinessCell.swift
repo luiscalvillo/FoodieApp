@@ -14,6 +14,7 @@ class BusinessCell: UITableViewCell {
     var nameLabel = UILabel()
     var addressLabel = UILabel()
     var distanceLabel =  UILabel()
+    var ratingLabel = UILabel()
     
     var cellView = UIView()
     
@@ -79,6 +80,7 @@ class BusinessCell: UITableViewCell {
         
         nameLabel.textColor = .label
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        ratingLabel.textColor = .label
         addressLabel.textColor = .label
         distanceLabel.textColor = .label
        

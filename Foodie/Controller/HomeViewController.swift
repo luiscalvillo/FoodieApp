@@ -370,6 +370,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles * 100) / 100)
         
         cell.distanceLabel.text = roundedDistanceInMiles + " mi"
+        cell.ratingLabel.text = createStarRatings(rating: business.rating)
         
         let businessImageUrl = businessList[indexPath.row].imageURL
         let imageView: UIImageView = cell.businessImageView

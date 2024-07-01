@@ -73,7 +73,7 @@ class BusinessCell: UITableViewCell {
     
     private func setupInformationStackView() {
     
-        informationStackView = UIStackView(arrangedSubviews: [nameLabel, addressLabel, distanceLabel])
+        informationStackView = UIStackView(arrangedSubviews: [nameLabel, ratingLabel, addressLabel, distanceLabel])
         informationStackView.axis = .vertical
         informationStackView.distribution = .equalSpacing
         informationStackView.translatesAutoresizingMaskIntoConstraints = false

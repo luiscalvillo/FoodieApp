@@ -21,6 +21,7 @@ class BusinessDetailViewController: UIViewController {
     var imageUrl = ""
     var businessRating = 0.0
     var currentLocation = [0.0, 0.0]
+    var ratingLabelText = ""
     
     var businessImageView = UIImageView()
     
@@ -108,7 +109,7 @@ class BusinessDetailViewController: UIViewController {
         businessNameLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         
         // Rating
-        ratingLabel.text = "\(businessRating)"
+        ratingLabel.text = createStarRatings(rating: businessRating)
         ratingLabel.textColor = .black
         ratingLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         
@@ -154,6 +155,33 @@ class BusinessDetailViewController: UIViewController {
         directionsButton.addGestureRecognizer(tapGesture)
     }
     
+    
+    func createStarRatings(rating: Double?) -> String {
+        switch rating {
+        case 1.0:
+            ratingLabelText = "⭐️"
+        case 1.5:
+            ratingLabelText = "⭐️✨"
+        case 2.0:
+            ratingLabelText = "⭐️⭐️"
+        case 2.5:
+            ratingLabelText = "⭐️⭐️✨"
+        case 3.0:
+            ratingLabelText = "⭐️⭐️⭐️"
+        case 3.5:
+            ratingLabelText = "⭐️⭐️⭐️✨"
+        case 4.0:
+            ratingLabelText = "⭐️⭐️⭐️⭐️"
+        case 4.5:
+            ratingLabelText = "⭐️⭐️⭐️⭐️✨"
+        case 5.0:
+            ratingLabelText = "⭐️⭐️⭐️⭐️⭐️"
+        default:
+            ratingLabelText = "⭐️⭐️⭐️⭐️⭐️"
+        }
+        
+        return ratingLabelText
+    }
     
     // MARK: - Navigation
     

@@ -127,6 +127,8 @@ class HomeViewController: UIViewController {
             customPointAnnotation.distance = business.distance
             customPointAnnotation.isClosed = business.isClosed
             customPointAnnotation.rating = business.rating
+            customPointAnnotation.phone = business.phone
+            customPointAnnotation.displayPhone = business.displayPhone
             
             if let coordinates = business.coordinates,
                let lat = coordinates["latitude"],
@@ -341,9 +343,11 @@ class HomeViewController: UIViewController {
         }
         
         if let businessRating = selectedAnnotation?.rating {
-            businessDetailVC.businessRating =  businessRating
-            
-            print("rating: \(businessRating)")
+            businessDetailVC.businessRating = businessRating
+        }
+        
+        if let displayPhone = selectedAnnotation?.displayPhone {
+            businessDetailVC.displayPhone = displayPhone
         }
         
         self.present(navVC, animated: true)
@@ -414,6 +418,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let businessRating = business.rating {
             businessDetailVC.businessRating = businessRating
+        }
+        
+        if let displayPhone = selectedAnnotation?.displayPhone {
+            businessDetailVC.displayPhone =  displayPhone
         }
 
         self.navigationController?.pushViewController(businessDetailVC, animated: true)
@@ -498,5 +506,7 @@ class CustomPointAnnotation: MKPointAnnotation {
     var distance: Double!
     var isClosed: Bool!
     var rating: Double!
+    var phone: String!
+    var displayPhone: String!
     var hours: [String : Any]!
 }

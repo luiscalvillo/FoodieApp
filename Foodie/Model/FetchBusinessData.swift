@@ -75,6 +75,8 @@ extension HomeViewController {
                     place.hours = business.value(forKey: "hours") as? [String : Any]
                     place.isOpenNow = business.value(forKeyPath: "hours.is_open_now") as? Bool
                     place.rating = business.value(forKey: "rating") as? Double
+                    place.phone = business.value(forKey: "phone") as? String
+                    place.displayPhone = business.value(forKey: "display_phone") as? String
                     
                     businessList.append(place)
                 }

@@ -72,19 +72,16 @@ class BusinessCell: UITableViewCell {
     }
     
     private func setupInformationStackView() {
-    
+        stackView.addSubview(informationStackView)
         informationStackView = UIStackView(arrangedSubviews: [nameLabel, ratingLabel, addressLabel, distanceLabel])
         informationStackView.axis = .vertical
-        informationStackView.distribution = .equalSpacing
-        informationStackView.translatesAutoresizingMaskIntoConstraints = false
+        informationStackView.distribution = .fillProportionally
         
         nameLabel.textColor = .label
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         ratingLabel.textColor = .label
         addressLabel.textColor = .label
         distanceLabel.textColor = .label
-       
-        stackView.addSubview(informationStackView)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

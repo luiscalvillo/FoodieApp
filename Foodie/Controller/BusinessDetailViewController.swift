@@ -22,6 +22,7 @@ class BusinessDetailViewController: UIViewController {
     var businessRating = 0.0
     var currentLocation = [0.0, 0.0]
     var ratingLabelText = ""
+    var displayPhone = ""
     
     var businessImageView = UIImageView()
     
@@ -29,6 +30,7 @@ class BusinessDetailViewController: UIViewController {
     var addressLabel = UILabel()
     var distanceLabel = UILabel()
     var ratingLabel = UILabel()
+    var displayPhoneLabel = UILabel()
   
     var businessInformationStackView = UIStackView()
     var background = UIView()
@@ -54,6 +56,7 @@ class BusinessDetailViewController: UIViewController {
         let mapHeight: CGFloat = 150
         
         mapView.frame = CGRect(x: 16, y: self.view.frame.maxY - mapHeight - (mapHeight / 2), width: mapWidth, height: mapHeight)
+        
         mapView.layer.cornerRadius = 16
         self.view.addSubview(mapView)
     }
@@ -118,6 +121,11 @@ class BusinessDetailViewController: UIViewController {
         addressLabel.textColor = .black
         addressLabel.font = UIFont.systemFont(ofSize: 20)
         
+        // Phone
+        displayPhoneLabel.text = displayPhone
+        displayPhoneLabel.textColor = .black
+        displayPhoneLabel.font = UIFont.systemFont(ofSize: 20)
+        
         // Distance
         let businessDistanceInMiles = distance.getMiles()
         let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles * 100) / 100)
@@ -131,14 +139,13 @@ class BusinessDetailViewController: UIViewController {
         self.background.addSubview(businessInformationStackView)
         
         businessInformationStackView.axis = .vertical
-        businessInformationStackView.distribution = .fillEqually
+        businessInformationStackView.distribution = .equalSpacing
         
         businessInformationStackView.addArrangedSubview(businessNameLabel)
         businessInformationStackView.addArrangedSubview(ratingLabel)
         businessInformationStackView.addArrangedSubview(addressLabel)
-        businessInformationStackView.addArrangedSubview(distanceLabel)
-        
-        print("Rating: \(businessRating)")
+        businessInformationStackView.addArrangedSubview(displayPhoneLabel)
+        businessInformationStackView.addArrangedSubview(distanceLabel)        
     }
     
     func createDirectionsButton() {

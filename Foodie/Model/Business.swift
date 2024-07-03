@@ -19,6 +19,8 @@ struct Business {
     var isClosed: Bool?
     var isOpenNow: Bool?
     var rating: Double?
+    var phone: String?
+    var displayPhone: String?
     
     var coordinates: [String : Double]?
     var hours: [String : Any]?

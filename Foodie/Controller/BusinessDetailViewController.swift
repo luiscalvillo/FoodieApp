@@ -209,6 +209,8 @@ class BusinessDetailViewController: UIViewController {
         phoneButton.setImage(UIImage(systemName: "phone"), for: .normal)
         phoneButton.layer.cornerRadius = 8
         phoneButton.tintColor = .white
+        
+        phoneButton.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
 
         buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -226,6 +228,24 @@ class BusinessDetailViewController: UIViewController {
         directionsButton.backgroundColor = .blue
         directionsButton.setImage(UIImage(systemName: "car"), for: .normal)
         directionsButton.layer.cornerRadius = 8
+    }
+    
+    
+    @objc
+    func phoneButtonTapped() {
+        makePhoneCall(phoneNumber: phone)
+    }
+    
+    func makePhoneCall(phoneNumber: String) {
+        if let phoneURL = NSURL(string: ("tel://" + phone)) {
+            let alert = UIAlertController(title: ("Call " + displayPhone + "?"), message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Call", style: .default, handler: { (action) in
+                UIApplication.shared.open(phoneURL as URL, options: [:], completionHandler: nil)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     

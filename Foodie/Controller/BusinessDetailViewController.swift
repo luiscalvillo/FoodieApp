@@ -23,6 +23,7 @@ class BusinessDetailViewController: UIViewController {
     var currentLocation = [0.0, 0.0]
     var ratingLabelText = ""
     var displayPhone = ""
+    var phone = ""
     
     var businessImageView = UIImageView()
     
@@ -35,6 +36,9 @@ class BusinessDetailViewController: UIViewController {
     var businessInformationStackView = UIStackView()
     var background = UIView()
     var directionsButton = UIButton()
+    var phoneButton = UIButton()
+    var websiteButton = UIButton()
+    var buttonsStackView = UIStackView()
     let mapView = MKMapView()
     
     
@@ -48,7 +52,7 @@ class BusinessDetailViewController: UIViewController {
         createBusinessInformationView()
         createMapView()
         showMapLocationFromCoordinates()
-        createDirectionsButton()
+        createButtonsStackView()
     }
     
     func createMapView() {
@@ -145,7 +149,7 @@ class BusinessDetailViewController: UIViewController {
         businessInformationStackView.addArrangedSubview(ratingLabel)
         businessInformationStackView.addArrangedSubview(addressLabel)
         businessInformationStackView.addArrangedSubview(displayPhoneLabel)
-        businessInformationStackView.addArrangedSubview(distanceLabel)        
+        businessInformationStackView.addArrangedSubview(distanceLabel)  
     }
     
     func createDirectionsButton() {
@@ -189,6 +193,41 @@ class BusinessDetailViewController: UIViewController {
         
         return ratingLabelText
     }
+    
+    func createButtonsStackView() {
+        background.addSubview(buttonsStackView)
+        buttonsStackView.addArrangedSubview(phoneButton)
+        buttonsStackView.addArrangedSubview(websiteButton)
+        buttonsStackView.addArrangedSubview(directionsButton)
+        
+        buttonsStackView.spacing = 16
+        
+        buttonsStackView.distribution = .fillEqually
+                
+        phoneButton.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+        phoneButton.backgroundColor = .blue
+        phoneButton.setImage(UIImage(systemName: "phone"), for: .normal)
+        phoneButton.layer.cornerRadius = 8
+        phoneButton.tintColor = .white
+
+        buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            buttonsStackView.topAnchor.constraint(equalTo: businessInformationStackView.bottomAnchor, constant: 16),
+            buttonsStackView.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 16),
+            buttonsStackView.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -16),
+            buttonsStackView.heightAnchor.constraint(equalToConstant: 60)
+        ])
+        
+        websiteButton.backgroundColor = .green
+        websiteButton.setImage(UIImage(systemName: "safari"), for: .normal)
+        websiteButton.layer.cornerRadius = 8
+        
+        directionsButton.backgroundColor = .blue
+        directionsButton.setImage(UIImage(systemName: "car"), for: .normal)
+        directionsButton.layer.cornerRadius = 8
+    }
+    
     
     // MARK: - Navigation
     

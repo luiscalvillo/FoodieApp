@@ -350,6 +350,10 @@ class HomeViewController: UIViewController {
             businessDetailVC.displayPhone = displayPhone
         }
         
+        if let phone = selectedAnnotation?.phone {
+            businessDetailVC.phone =  phone
+        }
+        
         self.present(navVC, animated: true)
     }
 }
@@ -422,6 +426,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let displayPhone = selectedAnnotation?.displayPhone {
             businessDetailVC.displayPhone =  displayPhone
+        }
+        
+        if let phone = selectedAnnotation?.phone {
+            businessDetailVC.phone =  phone
         }
 
         self.navigationController?.pushViewController(businessDetailVC, animated: true)

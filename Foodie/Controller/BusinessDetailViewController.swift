@@ -50,19 +50,23 @@ class BusinessDetailViewController: UIViewController {
         createBackgroundView()
         createBusinessImageView()
         createBusinessInformationView()
-        createMapView()
         showMapLocationFromCoordinates()
         createButtonsStackView()
+        createMapView()
     }
     
     func createMapView() {
-        let mapWidth = view.frame.size.width - 32
-        let mapHeight: CGFloat = 150
-        
-        mapView.frame = CGRect(x: 16, y: self.view.frame.maxY - mapHeight - (mapHeight / 2), width: mapWidth, height: mapHeight)
-        
-        mapView.layer.cornerRadius = 16
+
         self.view.addSubview(mapView)
+        
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            mapView.topAnchor.constraint(equalTo: buttonsStackView.bottomAnchor, constant: 16),
+            mapView.leadingAnchor.constraint(equalTo: background.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: background.trailingAnchor),
+            mapView.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: 16),
+        ])
     }
     
     func showMapLocationFromCoordinates() {
@@ -139,7 +143,7 @@ class BusinessDetailViewController: UIViewController {
         distanceLabel.font = UIFont.systemFont(ofSize: 16)
         
         // Information Stack View
-        businessInformationStackView = UIStackView(frame: CGRect(x: 16, y: self.view.frame.size.width, width: self.view.frame.size.width, height: 100))
+        businessInformationStackView = UIStackView(frame: CGRect(x: 16, y: self.view.frame.size.width, width: self.view.frame.size.width, height: 150))
         self.background.addSubview(businessInformationStackView)
         
         businessInformationStackView.axis = .vertical
@@ -157,7 +161,8 @@ class BusinessDetailViewController: UIViewController {
         directionsButton = UIButton(frame: CGRect(x: 16, y: mapView.frame.origin.y - 100, width: self.view.frame.size.width - 32, height: 60))
         directionsButton.setTitle("Directions", for: .normal)
         directionsButton.titleLabel?.font = UIFont.systemFont(ofSize: 24)
-        directionsButton.backgroundColor = UIColor.systemBlue
+        directionsButton.backgroundColor = UIColor.systemCyan
+        directionsButton.tintColor = .white
         directionsButton.layer.cornerRadius = 16
         
         self.background.addSubview(directionsButton)
@@ -196,19 +201,21 @@ class BusinessDetailViewController: UIViewController {
     
     func createButtonsStackView() {
         background.addSubview(buttonsStackView)
+        buttonsStackView.addArrangedSubview(directionsButton)
         buttonsStackView.addArrangedSubview(phoneButton)
         buttonsStackView.addArrangedSubview(websiteButton)
-        buttonsStackView.addArrangedSubview(directionsButton)
-        
+      
         buttonsStackView.spacing = 16
         
         buttonsStackView.distribution = .fillEqually
                 
         phoneButton.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
-        phoneButton.backgroundColor = .blue
+        phoneButton.backgroundColor = .white
         phoneButton.setImage(UIImage(systemName: "phone"), for: .normal)
         phoneButton.layer.cornerRadius = 8
-        phoneButton.tintColor = .white
+        phoneButton.layer.borderColor = UIColor.lightGray.cgColor
+        phoneButton.layer.borderWidth = 2
+        phoneButton.tintColor = .lightGray
         
         phoneButton.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
 
@@ -218,16 +225,22 @@ class BusinessDetailViewController: UIViewController {
             buttonsStackView.topAnchor.constraint(equalTo: businessInformationStackView.bottomAnchor, constant: 16),
             buttonsStackView.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 16),
             buttonsStackView.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -16),
-            buttonsStackView.heightAnchor.constraint(equalToConstant: 60)
+            buttonsStackView.heightAnchor.constraint(equalToConstant: 50)
         ])
         
-        websiteButton.backgroundColor = .green
+        websiteButton.backgroundColor = .white
         websiteButton.setImage(UIImage(systemName: "safari"), for: .normal)
         websiteButton.layer.cornerRadius = 8
+        websiteButton.layer.borderColor = UIColor.lightGray.cgColor
+        websiteButton.layer.borderWidth = 2
+        websiteButton.tintColor = .lightGray
         
-        directionsButton.backgroundColor = .blue
+        directionsButton.backgroundColor = .white
+        directionsButton.layer.borderColor = UIColor.lightGray.cgColor
+        directionsButton.layer.borderWidth = 2
         directionsButton.setImage(UIImage(systemName: "car"), for: .normal)
         directionsButton.layer.cornerRadius = 8
+        directionsButton.tintColor = .lightGray
     }
     
     

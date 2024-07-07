@@ -156,22 +156,6 @@ class BusinessDetailViewController: UIViewController {
         businessInformationStackView.addArrangedSubview(distanceLabel)  
     }
     
-    func createDirectionsButton() {
-        
-        directionsButton = UIButton(frame: CGRect(x: 16, y: mapView.frame.origin.y - 100, width: self.view.frame.size.width - 32, height: 60))
-        directionsButton.setTitle("Directions", for: .normal)
-        directionsButton.titleLabel?.font = UIFont.systemFont(ofSize: 24)
-        directionsButton.backgroundColor = UIColor.systemCyan
-        directionsButton.tintColor = .white
-        directionsButton.layer.cornerRadius = 16
-        
-        self.background.addSubview(directionsButton)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToAppleMaps(sender:)))
-        directionsButton.addGestureRecognizer(tapGesture)
-    }
-    
-    
     func createStarRatings(rating: Double?) -> String {
         switch rating {
         case 1.0:
@@ -241,6 +225,9 @@ class BusinessDetailViewController: UIViewController {
         directionsButton.setImage(UIImage(systemName: "car"), for: .normal)
         directionsButton.layer.cornerRadius = 8
         directionsButton.tintColor = .lightGray
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToAppleMaps(sender:)))
+        directionsButton.addGestureRecognizer(tapGesture)
     }
     
     

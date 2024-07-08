@@ -1,5 +1,5 @@
 //
-//  BusinessDetailViewController.swift
+//  BusinessDetailVC.swift
 //  Foodie
 //
 //  Created by Luis Calvillo on 4/9/23.
@@ -24,6 +24,7 @@ class BusinessDetailViewController: UIViewController {
     var ratingLabelText = ""
     var displayPhone = ""
     var phone = ""
+    var website = ""
     
     var businessImageView = UIImageView()
     
@@ -219,6 +220,9 @@ class BusinessDetailViewController: UIViewController {
         websiteButton.layer.borderWidth = 2
         websiteButton.tintColor = .lightGray
         
+        let websiteTapGesture = UITapGestureRecognizer(target: self, action: #selector(goToAppleMaps(sender:)))
+        websiteButton.addGestureRecognizer(websiteTapGesture)
+        
         directionsButton.backgroundColor = .white
         directionsButton.layer.borderColor = UIColor.lightGray.cgColor
         directionsButton.layer.borderWidth = 2
@@ -245,6 +249,25 @@ class BusinessDetailViewController: UIViewController {
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    @objc
+    func websiteButtonTapped() {
+        if let url = URL(string: website) {
+            open(url: url)
+        } else {
+            print("Invalid url")
+        }
+    }
+    
+    func open(url: URL) {
+        if #available(iOS 10, *) {
+            UIApplication.shared.open(url, options: [:], completionHandler: { (success) in
+                print("Open \(url): \(success)")
+            })
+        } else if UIApplication.shared.openURL(url) {
+            print("Open \(url)")
         }
     }
     

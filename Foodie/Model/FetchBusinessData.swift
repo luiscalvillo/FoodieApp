@@ -77,6 +77,7 @@ extension HomeViewController {
                     place.rating = business.value(forKey: "rating") as? Double
                     place.phone = business.value(forKey: "phone") as? String
                     place.displayPhone = business.value(forKey: "display_phone") as? String
+                    place.website = business.value(forKey: "url") as? String
                     
                     businessList.append(place)
                 }

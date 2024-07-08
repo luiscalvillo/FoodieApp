@@ -17,7 +17,7 @@
 		A887773729DF9FB00089BC49 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887773629DF9FB00089BC49 /* Extensions.swift */; };
 		A887773929DFA7D50089BC49 /* FetchBusinessData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887773829DFA7D50089BC49 /* FetchBusinessData.swift */; };
 		A887773B29DFAB610089BC49 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887773A29DFAB610089BC49 /* Business.swift */; };
-		A887774529E29EB20089BC49 /* BusinessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887774429E29EB20089BC49 /* BusinessDetailViewController.swift */; };
+		A887774529E29EB20089BC49 /* BusinessDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887774429E29EB20089BC49 /* BusinessDetailVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +32,7 @@
 		A887773629DF9FB00089BC49 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A887773829DFA7D50089BC49 /* FetchBusinessData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchBusinessData.swift; sourceTree = "<group>"; };
 		A887773A29DFAB610089BC49 /* Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
-		A887774429E29EB20089BC49 /* BusinessDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailViewController.swift; sourceTree = "<group>"; };
+		A887774429E29EB20089BC49 /* BusinessDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				A887772429DEA2150089BC49 /* HomeViewController.swift */,
-				A887774429E29EB20089BC49 /* BusinessDetailViewController.swift */,
+				A887774429E29EB20089BC49 /* BusinessDetailVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -184,7 +184,7 @@
 				A887772529DEA2150089BC49 /* HomeViewController.swift in Sources */,
 				A833C83F2C2183EF00491C88 /* BusinessCell.swift in Sources */,
 				A887772129DEA2150089BC49 /* AppDelegate.swift in Sources */,
-				A887774529E29EB20089BC49 /* BusinessDetailViewController.swift in Sources */,
+				A887774529E29EB20089BC49 /* BusinessDetailVC.swift in Sources */,
 				A887773929DFA7D50089BC49 /* FetchBusinessData.swift in Sources */,
 				A887773B29DFAB610089BC49 /* Business.swift in Sources */,
 				A887772329DEA2150089BC49 /* SceneDelegate.swift in Sources */,

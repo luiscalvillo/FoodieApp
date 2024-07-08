@@ -430,6 +430,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let phone = selectedAnnotation?.phone {
             businessDetailVC.phone =  phone
+        }   
+        
+        if let website = selectedAnnotation?.website {
+            businessDetailVC.website =  website
         }
 
         self.navigationController?.pushViewController(businessDetailVC, animated: true)
@@ -516,5 +520,6 @@ class CustomPointAnnotation: MKPointAnnotation {
     var rating: Double!
     var phone: String!
     var displayPhone: String!
+    var website: String!
     var hours: [String : Any]!
 }

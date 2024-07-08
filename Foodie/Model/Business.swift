@@ -21,6 +21,7 @@ struct Business {
     var rating: Double?
     var phone: String?
     var displayPhone: String?
+    var website: String?
     
     var coordinates: [String : Double]?
     var hours: [String : Any]?

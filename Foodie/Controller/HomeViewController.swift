@@ -316,7 +316,7 @@ class HomeViewController: UIViewController {
     
     func goToBusinessDetailVC() {
         
-        let businessDetailVC = BusinessDetailViewController()
+        let businessDetailVC = BusinessDetailVC()
         let navVC = UINavigationController(rootViewController: businessDetailVC)
         
         if let businessName = selectedAnnotation?.title {
@@ -352,6 +352,10 @@ class HomeViewController: UIViewController {
         
         if let phone = selectedAnnotation?.phone {
             businessDetailVC.phone =  phone
+        }
+        
+        if let website = selectedAnnotation?.website {
+            businessDetailVC.website =  website
         }
         
         self.present(navVC, animated: true)
@@ -393,7 +397,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
      }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let businessDetailVC = BusinessDetailViewController()
+        let businessDetailVC = BusinessDetailVC()
         
         let business = businessList[indexPath.row]
         
@@ -424,13 +428,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             businessDetailVC.businessRating = businessRating
         }
         
-        if let displayPhone = selectedAnnotation?.displayPhone {
+        if let displayPhone = business.displayPhone {
             businessDetailVC.displayPhone =  displayPhone
         }
         
-        if let phone = selectedAnnotation?.phone {
+        if let phone = business.phone {
             businessDetailVC.phone =  phone
-        }   
+        }
         
         if let website = selectedAnnotation?.website {
             businessDetailVC.website =  website

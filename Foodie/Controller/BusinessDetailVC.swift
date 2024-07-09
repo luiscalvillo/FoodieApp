@@ -9,9 +9,10 @@ import UIKit
 import SDWebImage
 import MapKit
 
-class BusinessDetailViewController: UIViewController {
+class BusinessDetailVC: UIViewController {
     
     // MARK: - Properties
+    
     
     var name = ""
     var address = ""
@@ -32,7 +33,6 @@ class BusinessDetailViewController: UIViewController {
     var addressLabel = UILabel()
     var distanceLabel = UILabel()
     var ratingLabel = UILabel()
-    var displayPhoneLabel = UILabel()
   
     var businessInformationStackView = UIStackView()
     var background = UIView()
@@ -130,11 +130,6 @@ class BusinessDetailViewController: UIViewController {
         addressLabel.textColor = .black
         addressLabel.font = UIFont.systemFont(ofSize: 20)
         
-        // Phone
-        displayPhoneLabel.text = displayPhone
-        displayPhoneLabel.textColor = .black
-        displayPhoneLabel.font = UIFont.systemFont(ofSize: 20)
-        
         // Distance
         let businessDistanceInMiles = distance.getMiles()
         let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles * 100) / 100)
@@ -153,7 +148,6 @@ class BusinessDetailViewController: UIViewController {
         businessInformationStackView.addArrangedSubview(businessNameLabel)
         businessInformationStackView.addArrangedSubview(ratingLabel)
         businessInformationStackView.addArrangedSubview(addressLabel)
-        businessInformationStackView.addArrangedSubview(displayPhoneLabel)
         businessInformationStackView.addArrangedSubview(distanceLabel)  
     }
     

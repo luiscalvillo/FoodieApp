@@ -83,9 +83,4 @@ class BusinessCell: UITableViewCell {
         addressLabel.textColor = .label
         distanceLabel.textColor = .label
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-    }
 }

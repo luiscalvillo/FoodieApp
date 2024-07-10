@@ -62,11 +62,10 @@ class HomeViewController: UIViewController {
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.requestWhenInUseAuthorization()
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.register(BusinessCell.self, forCellReuseIdentifier: BusinessCell.reuseID)
-        
+        configureSegmentedControl()
+        configureMapView()
+        configureTableView()
+
         self.title = "Foodie"
         self.view.backgroundColor = .white
         navigationController?.setNavigationBarHidden(false, animated: false )
@@ -86,9 +85,8 @@ class HomeViewController: UIViewController {
             }
         }
         
-        configureSegmentedControl()
-        configureMapView()
-        configureTableView()
+        tableView.reloadData()
+        
         createBusinessPopUpView()
         hidePopUpView()
         
@@ -270,16 +268,20 @@ class HomeViewController: UIViewController {
     }
     
     func configureTableView() {
-        
-        view.addSubview(tableView)
+    
+        tableView.dataSource = self
+        tableView.delegate = self
+       
+        tableView.register(BusinessCell.self, forCellReuseIdentifier: BusinessCell.reuseID)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 0),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+            tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     

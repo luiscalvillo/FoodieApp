@@ -36,9 +36,7 @@ class BusinessCell: UITableViewCell {
     private func setupCellView() {
         cellView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(cellView)
-        
-        contentView.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        
+                
         NSLayoutConstraint.activate([
             cellView.topAnchor.constraint(equalTo: contentView.topAnchor),
             cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -51,14 +49,16 @@ class BusinessCell: UITableViewCell {
         businessImageView.layer.cornerRadius = 25
         businessImageView.clipsToBounds = true
         businessImageView.translatesAutoresizingMaskIntoConstraints = false
-        businessImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        businessImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        NSLayoutConstraint.activate([
+            businessImageView.widthAnchor.constraint(equalToConstant: 150)
+        ])
         
         stackView = UIStackView(arrangedSubviews: [businessImageView, informationStackView])
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.spacing = 8
-        stackView.alignment = .leading
+        stackView.alignment = .top
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         cellView.addSubview(stackView)
@@ -72,7 +72,6 @@ class BusinessCell: UITableViewCell {
     }
     
     private func setupInformationStackView() {
-        stackView.addSubview(informationStackView)
         informationStackView = UIStackView(arrangedSubviews: [nameLabel, ratingLabel, addressLabel, distanceLabel])
         informationStackView.axis = .vertical
         informationStackView.distribution = .fillProportionally

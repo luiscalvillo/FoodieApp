@@ -277,6 +277,8 @@ class HomeViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         
+        tableView.separatorStyle = .none
+        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -457,16 +459,27 @@ extension HomeViewController: CLLocationManagerDelegate {
                 latitude = lat
                 longitude = lon
                 
-                locationManager?.stopUpdatingLocation()
-                
                 businessList = []
                 
-                self.retrieveBusinesses(latitude: self.latitude, longitude: self.longitude, category: "food", limit: 10, sortBy: "distance", locale: "en_US") { (response, error) in
-                    if let response = response {
-                        businessList = response
-                        DispatchQueue.main.async { [self] in
-                            self.tableView.reloadData()
-                            self.addBusinessesToMap()
+                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                    
+                    self?.retrieveBusinesses(latitude: lat, longitude: lon, category: "food", limit: 10, sortBy: "distance", locale: "en_US") { (response, error) in
+                        
+                        guard let self = self else { return }
+                        
+                        if let response = response {
+                            businessList = response
+                            
+                            // Update UI on the main thread
+                            DispatchQueue.main.async { [self] in
+                                self.tableView.reloadData()
+                                self.addBusinessesToMap()
+                            }
+                        } else if let error = error {
+                            // Handle error
+                            DispatchQueue.main.async {
+                                self.showError(error)
+                            }
                         }
                     }
                 }
@@ -474,6 +487,10 @@ extension HomeViewController: CLLocationManagerDelegate {
         } else {
             
         }
+    }
+    
+    private func showError(_ error: Error) {
+        // display error
     }
 }
 

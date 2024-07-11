@@ -41,7 +41,9 @@ extension HomeViewController {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             if let error = error {
-                completionHandler(nil, error)
+                DispatchQueue.main.async {
+                    completionHandler(nil, error)
+                }
             }
             
             do {
@@ -54,7 +56,9 @@ extension HomeViewController {
                 // Businesses
                 guard let businesses = resp.value(forKey: "businesses") as? [NSDictionary] else { return }
                 
-                // access each business
+                var temporaryBusinessList: [Business] = []
+                
+                // Access each business
                 for business in businesses {
                     var place = Business()
                     place.name = business.value(forKey: "name") as? String
@@ -79,13 +83,18 @@ extension HomeViewController {
                     place.displayPhone = business.value(forKey: "display_phone") as? String
                     place.website = business.value(forKey: "url") as? String
                     
-                    businessList.append(place)
+                    temporaryBusinessList.append(place)
                 }
-              
-                completionHandler(businessList, nil)
+                
+                DispatchQueue.main.async {
+                    businessList = temporaryBusinessList
+                    completionHandler(businessList, nil)
+                }
             } catch {
                 print("Caught error")
-                completionHandler(nil, error)
+                DispatchQueue.main.async {
+                    completionHandler(nil, error)
+                }
             }}.resume()
     }
 }

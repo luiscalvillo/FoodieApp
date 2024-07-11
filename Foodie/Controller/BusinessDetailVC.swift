@@ -6,13 +6,11 @@
 //
 
 import UIKit
-import SDWebImage
 import MapKit
 
 class BusinessDetailVC: UIViewController {
     
     // MARK: - Properties
-    
     
     var name = ""
     var address = ""

@@ -69,12 +69,24 @@ class HomeViewController: UIViewController {
         self.title = "Foodie"
         self.view.backgroundColor = .white
         navigationController?.setNavigationBarHidden(false, animated: false )
-        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
+        tableView.reloadData()
+        createBusinessPopUpView()
+        hidePopUpView()
+        addPopUpViewTapGesture()
+        toggleBetweenMapAndListView()
+    }
+    
+    func addPopUpViewTapGesture() {
+        let popUpViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePopUpViewScreenTap(sender:)))
+        popUpView.addGestureRecognizer(popUpViewTapGesture)
+    }
+    
+    func toggleBetweenMapAndListView() {
         UIView.animate(withDuration: 0.5) {
             if self.mapViewIsVisible == true {
                 self.mapView.alpha = 1
@@ -84,14 +96,6 @@ class HomeViewController: UIViewController {
                 self.tableView.alpha = 1
             }
         }
-        
-        tableView.reloadData()
-        
-        createBusinessPopUpView()
-        hidePopUpView()
-        
-        let popUpViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(handlePopUpViewScreenTap(sender:)))
-        popUpView.addGestureRecognizer(popUpViewTapGesture)
     }
     
     func configureMapView() {
@@ -106,7 +110,7 @@ class HomeViewController: UIViewController {
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
         
-        mapView.mapType = MKMapType.standard
+        mapView.mapType = .standard
         mapView.isZoomEnabled = true
         mapView.isScrollEnabled = true
         mapView.showsUserLocation = true
@@ -140,7 +144,6 @@ class HomeViewController: UIViewController {
     func createBusinessPopUpView() {
         
         let width = view.self.frame.width
-        let originY: CGFloat = view.frame.height - popUpViewHeight
         
         // Pop Up View
         popUpView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: popUpViewHeight))

@@ -9,23 +9,7 @@ import Foundation
 
 var businessList: [Business] = []
 
-// codable test
-struct Response: Codable {
-    let results: MyResults
-    let status: String
-}
-
-struct MyResult: Codable {
-    let name: String?
-    let id: String?
-    let image_url: String?
-}
-
-struct MyResults: Codable {
-    var hours: [MyResult]
-}
-
-extension HomeViewController {
+extension HomeVC {
     
     func retrieveBusinesses(latitude: Double, longitude: Double, category: String, limit: Int, sortBy: String, locale: String, completionHandler: @escaping ([Business]?, Error?) -> Void) {
         
@@ -71,12 +55,9 @@ extension HomeViewController {
                     
                     let coordinates = business.value(forKey: "coordinates") as? [String : Double]
                     
-                    place.coordinates = coordinates
-                    
                     place.latitude = coordinates?["latitude"] as? Double
                     place.longitude = coordinates?["longitude"] as? Double
                     place.isClosed = business.value(forKey: "is_closed") as? Bool
-                    place.hours = business.value(forKey: "hours") as? [String : Any]
                     place.isOpenNow = business.value(forKeyPath: "hours.is_open_now") as? Bool
                     place.rating = business.value(forKey: "rating") as? Double
                     place.phone = business.value(forKey: "phone") as? String

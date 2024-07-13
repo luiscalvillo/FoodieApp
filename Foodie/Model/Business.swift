@@ -5,9 +5,9 @@
 //  Created by Luis Calvillo on 4/6/23.
 //
 
-import UIKit
+import Foundation
 
-struct Business {
+struct Business: Codable {
     var name: String?
     var id: String?
     var address: String?
@@ -23,6 +23,24 @@ struct Business {
     var displayPhone: String?
     var website: String?
     
-    var coordinates: [String : Double]?
-    var hours: [String : Any]?
+    struct Coordinates: Codable {
+        var latitude: Double?
+        var longitude: Double?
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case id
+        case address
+        case distance
+        case imageURL = "image_url"
+        case latitude
+        case longitude
+        case isClosed = "is_closed"
+        case isOpenNow = "is_open_now"
+        case rating
+        case phone
+        case displayPhone = "display_phone"
+        case website = "url"
+    }
 }

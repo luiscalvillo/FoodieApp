@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  HomeVC.swift
 //  Foodie
 //
 //  Created by Luis Calvillo on 4/5/23.
@@ -10,7 +10,7 @@ import MapKit
 import CoreLocation
 import SDWebImage
 
-class HomeViewController: UIViewController {
+class HomeVC: UIViewController {
     
     
     // MARK: - Properties
@@ -44,31 +44,24 @@ class HomeViewController: UIViewController {
     let popUpViewHeight: CGFloat = 150
     
     var tableView = UITableView()
-
+    
     var mapViewIsVisible = true
     var listViewIsVisible = false
     
     var segmentedControl = UISegmentedControl()
-        
+    
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mapView.delegate = self
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager?.requestWhenInUseAuthorization()
-        
+        setupMapView()
+        setupLocationManager()
         configureSegmentedControl()
         configureMapView()
         configureTableView()
-
-        self.title = "Foodie"
-        self.view.backgroundColor = .white
-        navigationController?.setNavigationBarHidden(false, animated: false )
+        setupView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,6 +72,12 @@ class HomeViewController: UIViewController {
         hidePopUpView()
         addPopUpViewTapGesture()
         toggleBetweenMapAndListView()
+    }
+    
+    func setupView() {
+        self.title = "Foodie"
+        self.view.backgroundColor = .white
+        navigationController?.setNavigationBarHidden(false, animated: false )
     }
     
     func addPopUpViewTapGesture() {
@@ -109,13 +108,6 @@ class HomeViewController: UIViewController {
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
-        
-        mapView.mapType = .standard
-        mapView.isZoomEnabled = true
-        mapView.isScrollEnabled = true
-        mapView.showsUserLocation = true
-        mapView.userTrackingMode = .follow
-        mapView.center = view.center
     }
     
     func addBusinessesToMap() {
@@ -132,12 +124,9 @@ class HomeViewController: UIViewController {
             customPointAnnotation.phone = business.phone
             customPointAnnotation.displayPhone = business.displayPhone
             
-            if let coordinates = business.coordinates,
-               let lat = coordinates["latitude"],
-               let lon = coordinates["longitude"] {
-                customPointAnnotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                mapView.addAnnotation(customPointAnnotation)
-            }
+            guard let lat = business.latitude, let lon = business.longitude else { return }
+            customPointAnnotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            mapView.addAnnotation(customPointAnnotation)
         }
     }
     
@@ -271,10 +260,10 @@ class HomeViewController: UIViewController {
     }
     
     func configureTableView() {
-    
+        
         tableView.dataSource = self
         tableView.delegate = self
-       
+        
         tableView.register(BusinessCell.self, forCellReuseIdentifier: BusinessCell.reuseID)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -367,12 +356,49 @@ class HomeViewController: UIViewController {
         
         self.present(navVC, animated: true)
     }
+    
+    private func setupLocationManager() {
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager?.requestWhenInUseAuthorization()
+    }
+    
+    private func setupMapView() {
+        mapView.delegate = self
+        mapView.mapType = .standard
+        mapView.isZoomEnabled = true
+        mapView.isScrollEnabled = true
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
+        mapView.center = view.center
+    }
+    
+    private func configureBusinessDetailView(_ detailVC: BusinessDetailVC, with business: Business) {
+        detailVC.name = business.name ?? ""
+        detailVC.address = business.address ?? ""
+        detailVC.distance = business.distance ?? 0.0
+        detailVC.latitude = business.latitude ?? 0.0
+        detailVC.longitude = business.longitude ?? 0.0
+        detailVC.imageUrl = business.imageURL ?? ""
+        detailVC.businessRating = business.rating ?? 0.0
+        detailVC.displayPhone = business.displayPhone ?? ""
+        detailVC.phone = business.phone ?? ""
+        detailVC.website = business.website ?? ""
+    }
+    
+    private func transitionToBusinessDetailVC(with business: Business) {
+        let businessDetailVC = BusinessDetailVC()
+        configureBusinessDetailView(businessDetailVC, with: business)
+        let navVC = UINavigationController(rootViewController: businessDetailVC)
+        present(navVC, animated: true)
+    }
 }
 
 
 // MARK: - Extensions
 
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+extension HomeVC: UITableViewDataSource, UITableViewDelegate {
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
          return businessList.count
     }
@@ -408,50 +434,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         let business = businessList[indexPath.row]
         
-        if let businessName = business.name {
-            businessDetailVC.name = businessName
-        }
+        configureBusinessDetailView(businessDetailVC, with: business)
         
-        if let businessAddress = business.address {
-            businessDetailVC.address = businessAddress
-        }
-        
-        if let businessDistance = business.distance {
-            businessDetailVC.distance = businessDistance
-        }
-        if let businessLatitude = business.latitude {
-            businessDetailVC.latitude = businessLatitude
-        }
-        
-        if let businessLongitude = business.longitude {
-            businessDetailVC.longitude = businessLongitude
-        }
-        
-        if let businessImageURL = business.imageURL {
-            businessDetailVC.imageUrl = businessImageURL
-        }
-        
-        if let businessRating = business.rating {
-            businessDetailVC.businessRating = businessRating
-        }
-        
-        if let displayPhone = business.displayPhone {
-            businessDetailVC.displayPhone =  displayPhone
-        }
-        
-        if let phone = business.phone {
-            businessDetailVC.phone =  phone
-        }
-        
-        if let website = selectedAnnotation?.website {
-            businessDetailVC.website =  website
-        }
-
         self.navigationController?.pushViewController(businessDetailVC, animated: true)
     }
 }
 
-extension HomeViewController: CLLocationManagerDelegate {
+extension HomeVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
         if status == .authorizedWhenInUse {
@@ -497,7 +486,7 @@ extension HomeViewController: CLLocationManagerDelegate {
     }
 }
 
-extension HomeViewController: MKMapViewDelegate {
+extension HomeVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         

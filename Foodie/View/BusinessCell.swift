@@ -9,17 +9,50 @@ import UIKit
 
 class BusinessCell: UITableViewCell {
     
+    
+    // MARK: - Properties
+    
     static let reuseID = "BusinessCell"
-    var businessImageView = UIImageView()
-    var nameLabel = UILabel()
-    var addressLabel = UILabel()
-    var distanceLabel =  UILabel()
-    var ratingLabel = UILabel()
     
-    var cellView = UIView()
+    let businessImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 25
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     
-    var stackView = UIStackView()
-    var informationStackView = UIStackView()
+    let nameLabel = BusinessCell.createLabel(font: .boldSystemFont(ofSize: 18))
+    let addressLabel = BusinessCell.createLabel()
+    let distanceLabel = BusinessCell.createLabel()
+    let ratingLabel = BusinessCell.createLabel()
+    
+    private let cellView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 8
+        stackView.alignment = .top
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private let informationStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillProportionally
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    
+    // MARK: - Initialization
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,10 +66,19 @@ class BusinessCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // MARK: - Setup
+    
+    private static func createLabel(font: UIFont = UIFont.systemFont(ofSize: 14)) -> UILabel {
+        let label = UILabel()
+        label.textColor = .label
+        label.font = font
+        return label
+    }
+    
     private func setupCellView() {
-        cellView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(cellView)
-                
+        
         NSLayoutConstraint.activate([
             cellView.topAnchor.constraint(equalTo: contentView.topAnchor),
             cellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -46,21 +88,12 @@ class BusinessCell: UITableViewCell {
     }
     
     private func setupStackView() {
-        businessImageView.layer.cornerRadius = 25
-        businessImageView.clipsToBounds = true
-        businessImageView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             businessImageView.widthAnchor.constraint(equalToConstant: 150)
         ])
         
-        stackView = UIStackView(arrangedSubviews: [businessImageView, informationStackView])
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.spacing = 8
-        stackView.alignment = .top
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+        stackView.addArrangedSubview(businessImageView)
+        stackView.addArrangedSubview(informationStackView)
         cellView.addSubview(stackView)
         
         NSLayoutConstraint.activate([
@@ -72,14 +105,9 @@ class BusinessCell: UITableViewCell {
     }
     
     private func setupInformationStackView() {
-        informationStackView = UIStackView(arrangedSubviews: [nameLabel, ratingLabel, addressLabel, distanceLabel])
-        informationStackView.axis = .vertical
-        informationStackView.distribution = .fillProportionally
-        
-        nameLabel.textColor = .label
-        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        ratingLabel.textColor = .label
-        addressLabel.textColor = .label
-        distanceLabel.textColor = .label
+        informationStackView.addArrangedSubview(nameLabel)
+        informationStackView.addArrangedSubview(ratingLabel)
+        informationStackView.addArrangedSubview(addressLabel)
+        informationStackView.addArrangedSubview(distanceLabel)
     }
 }

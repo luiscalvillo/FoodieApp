@@ -311,48 +311,11 @@ class HomeVC: UIViewController {
     // MARK: - Navigation
     
     func goToBusinessDetailVC() {
+        guard let selectedAnnotation = self.selectedAnnotation else { return }
+        guard let business = businessList.first(where: { $0.latitude == selectedAnnotation.latitude && $0.longitude == selectedAnnotation.longitude }) else { return }
         
-        let businessDetailVC = BusinessDetailVC()
+        let businessDetailVC = BusinessDetailVC(business: business)
         let navVC = UINavigationController(rootViewController: businessDetailVC)
-        
-        if let businessName = selectedAnnotation?.title {
-            businessDetailVC.name = businessName
-        }
-        
-        if let businessAddress = selectedAnnotation?.address {
-            businessDetailVC.address = businessAddress
-        }
-        
-        if let businessDistance = selectedAnnotation?.distance {
-            businessDetailVC.distance = businessDistance
-        }
-        if let businessLatitude = selectedAnnotation?.latitude {
-            businessDetailVC.latitude = businessLatitude
-        }
-        
-        if let businessLongitude = selectedAnnotation?.longitude {
-            businessDetailVC.longitude = businessLongitude
-        }
-        
-        if let businessImageURL = selectedAnnotation?.imageUrl {
-            businessDetailVC.imageUrl = businessImageURL
-        }
-        
-        if let businessRating = selectedAnnotation?.rating {
-            businessDetailVC.businessRating = businessRating
-        }
-        
-        if let displayPhone = selectedAnnotation?.displayPhone {
-            businessDetailVC.displayPhone = displayPhone
-        }
-        
-        if let phone = selectedAnnotation?.phone {
-            businessDetailVC.phone =  phone
-        }
-        
-        if let website = selectedAnnotation?.website {
-            businessDetailVC.website =  website
-        }
         
         self.present(navVC, animated: true)
     }
@@ -373,36 +336,16 @@ class HomeVC: UIViewController {
         mapView.userTrackingMode = .follow
         mapView.center = view.center
     }
-    
-    private func configureBusinessDetailView(_ detailVC: BusinessDetailVC, with business: Business) {
-        detailVC.name = business.name ?? ""
-        detailVC.address = business.address ?? ""
-        detailVC.distance = business.distance ?? 0.0
-        detailVC.latitude = business.latitude ?? 0.0
-        detailVC.longitude = business.longitude ?? 0.0
-        detailVC.imageUrl = business.imageURL ?? ""
-        detailVC.businessRating = business.rating ?? 0.0
-        detailVC.displayPhone = business.displayPhone ?? ""
-        detailVC.phone = business.phone ?? ""
-        detailVC.website = business.website ?? ""
-    }
-    
-    private func transitionToBusinessDetailVC(with business: Business) {
-        let businessDetailVC = BusinessDetailVC()
-        configureBusinessDetailView(businessDetailVC, with: business)
-        let navVC = UINavigationController(rootViewController: businessDetailVC)
-        present(navVC, animated: true)
-    }
 }
 
 
 // MARK: - Extensions
 
 extension HomeVC: UITableViewDataSource, UITableViewDelegate {
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         return businessList.count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return businessList.count
     }
-        
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BusinessCell.reuseID, for: indexPath) as! BusinessCell
         let business = businessList[indexPath.row]
@@ -410,7 +353,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         cell.nameLabel.text = business.name
         cell.addressLabel.text = business.address
         cell.distanceLabel.text = "\(String(describing: business.distance?.getMiles())) mi"
-
+        
         let businessDistanceInMiles = business.distance!.getMiles()
         let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles * 100) / 100)
         
@@ -419,22 +362,18 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         
         let businessImageUrl = businessList[indexPath.row].imageURL
         let imageView: UIImageView = cell.businessImageView
-    
+        
         imageView.sd_setImage(with: URL(string: businessImageUrl!), placeholderImage: nil)
         
         return cell
-     }
-     
-     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-         return 148
-     }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 148
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let businessDetailVC = BusinessDetailVC()
-        
-        let business = businessList[indexPath.row]
-        
-        configureBusinessDetailView(businessDetailVC, with: business)
+        let businessDetailVC = BusinessDetailVC(business: businessList[indexPath.row])
         
         self.navigationController?.pushViewController(businessDetailVC, animated: true)
     }

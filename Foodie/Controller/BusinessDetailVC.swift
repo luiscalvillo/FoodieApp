@@ -12,33 +12,46 @@ class BusinessDetailVC: UIViewController {
     
     // MARK: - Properties
     
-    var name = ""
-    var address = ""
-    var distance = 0.0
-    var latitude = 0.0
-    var longitude = 0.0
-    var imageUrl = ""
-    var businessRating = 0.0
-    var currentLocation = [0.0, 0.0]
+//    var name = ""
+//    var address = ""
+//    var distance = 0.0
+//    var latitude = 0.0
+//    var longitude = 0.0
+//    var imageUrl = ""
+//    var businessRating = 0.0
+//    var currentLocation = [0.0, 0.0]
     var ratingLabelText = ""
-    var displayPhone = ""
-    var phone = ""
-    var website = ""
+//    var displayPhone = ""
+//    var phone = ""
+//    var website = ""
+//    
+    
+    var business: Business
     
     var businessImageView = UIImageView()
     
-    var businessNameLabel = UILabel()
-    var addressLabel = UILabel()
-    var distanceLabel = UILabel()
-    var ratingLabel = UILabel()
+    private var businessNameLabel = UILabel()
+    private var addressLabel = UILabel()
+    private var distanceLabel = UILabel()
+    private var ratingLabel = UILabel()
   
-    var businessInformationStackView = UIStackView()
-    var background = UIView()
-    var directionsButton = UIButton()
-    var phoneButton = UIButton()
-    var websiteButton = UIButton()
-    var buttonsStackView = UIStackView()
-    let mapView = MKMapView()
+    private var businessInformationStackView = UIStackView()
+    private var background = UIView()
+    private var directionsButton = UIButton()
+    private var phoneButton = UIButton()
+    private var websiteButton = UIButton()
+    private var buttonsStackView = UIStackView()
+    private let mapView = MKMapView()
+    
+    
+    init(business: Business) {
+        self.business = business
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     // MARK: - View Lifecycle
@@ -53,6 +66,9 @@ class BusinessDetailVC: UIViewController {
         createButtonsStackView()
         createMapView()
     }
+    
+    
+    // MARK: - Setup Methods
     
     func createMapView() {
 
@@ -72,8 +88,8 @@ class BusinessDetailVC: UIViewController {
         
         var region = MKCoordinateRegion()
         
-        region.center.latitude = latitude
-        region.center.longitude = longitude
+        region.center.latitude = business.latitude ?? 0.0
+        region.center.longitude = business.longitude ?? 0.0
         
         region.span.latitudeDelta = 0.001
         region.span.longitudeDelta = 0.001
@@ -88,8 +104,8 @@ class BusinessDetailVC: UIViewController {
         
         let annotation = MKPointAnnotation()
         
-        annotation.coordinate.latitude = latitude
-        annotation.coordinate.longitude = longitude
+        annotation.coordinate.latitude = business.latitude ?? 0.0
+        annotation.coordinate.longitude = business.longitude ?? 0.0
         
         self.mapView.addAnnotation(annotation)
     }
@@ -108,28 +124,28 @@ class BusinessDetailVC: UIViewController {
         self.background.addSubview(businessImageView)
         
         let imageView: UIImageView = self.businessImageView
-        imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil)
+        imageView.sd_setImage(with: URL(string: business.imageURL ?? ""), placeholderImage: nil)
     }
     
     func createBusinessInformationView() {
         
         // Business Name
-        businessNameLabel.text = name
+        businessNameLabel.text = business.name
         businessNameLabel.textColor = .black
         businessNameLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         
         // Rating
-        ratingLabel.text = createStarRatings(rating: businessRating)
+        ratingLabel.text = createStarRatings(rating: business.rating)
         ratingLabel.textColor = .black
         ratingLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         
         // Address
-        addressLabel.text = address
+        addressLabel.text = business.address
         addressLabel.textColor = .black
         addressLabel.font = UIFont.systemFont(ofSize: 20)
         
         // Distance
-        let businessDistanceInMiles = distance.getMiles()
+        let businessDistanceInMiles = business.distance?.getMiles() ?? 0.0
         let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles * 100) / 100)
         
         distanceLabel.text = roundedDistanceInMiles + " mi"
@@ -229,12 +245,12 @@ class BusinessDetailVC: UIViewController {
     
     @objc
     func phoneButtonTapped() {
-        makePhoneCall(phoneNumber: phone)
+        makePhoneCall(phoneNumber: business.phone ?? "")
     }
     
     func makePhoneCall(phoneNumber: String) {
-        if let phoneURL = NSURL(string: ("tel://" + phone)) {
-            let alert = UIAlertController(title: ("Call " + displayPhone + "?"), message: nil, preferredStyle: .alert)
+        if let phoneURL = NSURL(string: ("tel://" + (business.phone ?? ""))) {
+            let alert = UIAlertController(title: ("Call " + (business.displayPhone ?? "") + "?"), message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Call", style: .default, handler: { (action) in
                 UIApplication.shared.open(phoneURL as URL, options: [:], completionHandler: nil)
             }))
@@ -246,7 +262,7 @@ class BusinessDetailVC: UIViewController {
     
     @objc
     func websiteButtonTapped() {
-        if let url = URL(string: website) {
+        if let url = URL(string: business.website ?? "") {
             open(url: url)
         } else {
             print("Invalid url")
@@ -269,13 +285,10 @@ class BusinessDetailVC: UIViewController {
     @objc
     func goToAppleMaps(sender: UITapGestureRecognizer) {
         
-        let destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)))
+        let destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: business.latitude ?? 0.0, longitude: business.longitude ?? 0.0)))
         
-        destination.name = name
-        
-        let yourLocation = CLLocation(latitude: currentLocation[0], longitude: currentLocation[1])
-        let businessLocation = CLLocation(latitude: latitude, longitude: longitude)
-                
+        destination.name = business.name
+
         MKMapItem.openMaps(with: [destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
 }

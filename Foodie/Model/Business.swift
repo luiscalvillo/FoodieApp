@@ -44,3 +44,35 @@ struct Business: Codable {
         case website = "url"
     }
 }
+
+
+func createStarRatings(rating: Double?, ratingLabelText: String) -> String {
+    
+    var ratingLabelText = ratingLabelText
+    
+    switch rating {
+    case 1.0:
+        ratingLabelText = "⭐️"
+    case 1.5:
+        ratingLabelText = "⭐️✨"
+    case 2.0:
+        ratingLabelText = "⭐️⭐️"
+    case 2.5:
+        ratingLabelText = "⭐️⭐️✨"
+    case 3.0:
+        ratingLabelText = "⭐️⭐️⭐️"
+    case 3.5:
+        ratingLabelText = "⭐️⭐️⭐️✨"
+    case 4.0:
+        ratingLabelText = "⭐️⭐️⭐️⭐️"
+    case 4.5:
+        ratingLabelText = "⭐️⭐️⭐️⭐️✨"
+    case 5.0:
+        ratingLabelText = "⭐️⭐️⭐️⭐️⭐️"
+    default:
+        ratingLabelText = "⭐️⭐️⭐️⭐️⭐️"
+    }
+    
+    return ratingLabelText
+}
+

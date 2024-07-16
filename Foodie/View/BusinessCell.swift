@@ -14,6 +14,11 @@ class BusinessCell: UITableViewCell {
     
     static let reuseID = "BusinessCell"
     
+    let nameLabel = BusinessCell.createLabel(font: .boldSystemFont(ofSize: 18))
+    let addressLabel = BusinessCell.createLabel()
+    let distanceLabel = BusinessCell.createLabel()
+    let ratingLabel = BusinessCell.createLabel()
+    
     let businessImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 25
@@ -21,11 +26,6 @@ class BusinessCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
-    let nameLabel = BusinessCell.createLabel(font: .boldSystemFont(ofSize: 18))
-    let addressLabel = BusinessCell.createLabel()
-    let distanceLabel = BusinessCell.createLabel()
-    let ratingLabel = BusinessCell.createLabel()
     
     private let cellView: UIView = {
         let view = UIView()

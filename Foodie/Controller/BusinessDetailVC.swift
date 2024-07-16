@@ -12,24 +12,10 @@ class BusinessDetailVC: UIViewController {
     
     // MARK: - Properties
     
-//    var name = ""
-//    var address = ""
-//    var distance = 0.0
-//    var latitude = 0.0
-//    var longitude = 0.0
-//    var imageUrl = ""
-//    var businessRating = 0.0
-//    var currentLocation = [0.0, 0.0]
-    var ratingLabelText = ""
-//    var displayPhone = ""
-//    var phone = ""
-//    var website = ""
-//    
-    
-    var business: Business
-    
-    var businessImageView = UIImageView()
-    
+    private var business: Business
+    private var businessImageView = UIImageView()
+    private  var ratingLabelText = ""
+   
     private var businessNameLabel = UILabel()
     private var addressLabel = UILabel()
     private var distanceLabel = UILabel()
@@ -43,6 +29,8 @@ class BusinessDetailVC: UIViewController {
     private var buttonsStackView = UIStackView()
     private let mapView = MKMapView()
     
+    
+    // MARK: - Initialization
     
     init(business: Business) {
         self.business = business
@@ -135,7 +123,7 @@ class BusinessDetailVC: UIViewController {
         businessNameLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         
         // Rating
-        ratingLabel.text = createStarRatings(rating: business.rating)
+        ratingLabel.text = createStarRatings(rating: business.rating, ratingLabelText: ratingLabelText)
         ratingLabel.textColor = .black
         ratingLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         
@@ -163,33 +151,6 @@ class BusinessDetailVC: UIViewController {
         businessInformationStackView.addArrangedSubview(ratingLabel)
         businessInformationStackView.addArrangedSubview(addressLabel)
         businessInformationStackView.addArrangedSubview(distanceLabel)  
-    }
-    
-    func createStarRatings(rating: Double?) -> String {
-        switch rating {
-        case 1.0:
-            ratingLabelText = "⭐️"
-        case 1.5:
-            ratingLabelText = "⭐️✨"
-        case 2.0:
-            ratingLabelText = "⭐️⭐️"
-        case 2.5:
-            ratingLabelText = "⭐️⭐️✨"
-        case 3.0:
-            ratingLabelText = "⭐️⭐️⭐️"
-        case 3.5:
-            ratingLabelText = "⭐️⭐️⭐️✨"
-        case 4.0:
-            ratingLabelText = "⭐️⭐️⭐️⭐️"
-        case 4.5:
-            ratingLabelText = "⭐️⭐️⭐️⭐️✨"
-        case 5.0:
-            ratingLabelText = "⭐️⭐️⭐️⭐️⭐️"
-        default:
-            ratingLabelText = "⭐️⭐️⭐️⭐️⭐️"
-        }
-        
-        return ratingLabelText
     }
     
     func createButtonsStackView() {

@@ -150,7 +150,6 @@ class HomeVC: UIViewController {
         // Name
         businessNameLabel.text = ""
         businessNameLabel.textColor = .black
-        businessNameLabel.textColor = .black
         businessNameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         
         // Address
@@ -279,33 +278,6 @@ class HomeVC: UIViewController {
         ])
     }
     
-    func createStarRatings(rating: Double?) -> String {
-        switch rating {
-        case 1.0:
-            ratingLabelText = "⭐️"
-        case 1.5:
-            ratingLabelText = "⭐️✨"
-        case 2.0:
-            ratingLabelText = "⭐️⭐️"
-        case 2.5:
-            ratingLabelText = "⭐️⭐️✨"
-        case 3.0:
-            ratingLabelText = "⭐️⭐️⭐️"
-        case 3.5:
-            ratingLabelText = "⭐️⭐️⭐️✨"
-        case 4.0:
-            ratingLabelText = "⭐️⭐️⭐️⭐️"
-        case 4.5:
-            ratingLabelText = "⭐️⭐️⭐️⭐️✨"
-        case 5.0:
-            ratingLabelText = "⭐️⭐️⭐️⭐️⭐️"
-        default:
-            ratingLabelText = "⭐️⭐️⭐️⭐️⭐️"
-        }
-        
-        return ratingLabelText
-    }
-    
     
     
     // MARK: - Navigation
@@ -358,7 +330,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles * 100) / 100)
         
         cell.distanceLabel.text = roundedDistanceInMiles + " mi"
-        cell.ratingLabel.text = createStarRatings(rating: business.rating)
+        cell.ratingLabel.text = createStarRatings(rating: business.rating, ratingLabelText: ratingLabelText)
         
         let businessImageUrl = businessList[indexPath.row].imageURL
         let imageView: UIImageView = cell.businessImageView
@@ -449,7 +421,7 @@ extension HomeVC: MKMapViewDelegate {
                 let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles! * 100) / 100)
                 
                 distanceLabel.text = roundedDistanceInMiles + " mi"
-                ratingLabel.text = createStarRatings(rating: selectedAnnotation?.rating)
+                ratingLabel.text = createStarRatings(rating: selectedAnnotation?.rating, ratingLabelText: ratingLabelText)
                 
                 let businessImageUrl = selectedAnnotation?.imageUrl ?? ""
                 let imageView: UIImageView = self.businessImageView

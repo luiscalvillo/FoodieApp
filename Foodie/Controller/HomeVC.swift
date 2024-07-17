@@ -429,30 +429,34 @@ extension HomeVC: MKMapViewDelegate {
                 
         self.selectedAnnotation = annotation
         
-        if isPopUpViewVisible == false {
-            
-            if mapViewIsVisible {
-                showPopUpView()
-            }
-            
-            if view .isKind(of: MKUserLocation.self) {
-                
-            } else {
-                businessNameLabel.text = selectedAnnotation?.title
-                addressLabel.text = selectedAnnotation?.address
-                
-                let businessDistanceInMiles = selectedAnnotation?.distance.getMiles()
-                let roundedDistanceInMiles = String(format: "%.2f", ceil(businessDistanceInMiles! * 100) / 100)
-                
-                distanceLabel.text = roundedDistanceInMiles + " mi"
-                ratingLabel.text = createStarRatings(rating: selectedAnnotation?.rating, ratingLabelText: ratingLabelText)
-                
-                let businessImageUrl = selectedAnnotation?.imageUrl ?? ""
-                let imageView: UIImageView = self.businessImageView
-                imageView.sd_setImage(with: URL(string: businessImageUrl), placeholderImage: nil)
-            }
-        } else {
+        // Check if the popup view is not visible
+        guard !isPopUpViewVisible else {
             hidePopUpView()
+            return
+        }
+        
+        // Show the popup view if the map view is visible
+        if mapViewIsVisible {
+            showPopUpView()
+        }
+        
+        // Skip user location annotation
+        guard !(view.annotation is MKUserLocation) else { return }
+        
+        businessNameLabel.text = selectedAnnotation?.title
+        addressLabel.text = selectedAnnotation?.address
+        
+        if let distanceInMiles = selectedAnnotation?.distance.getMiles() {
+            let roundedDistanceInMiles = String(format: "%.2f", ceil(distanceInMiles * 100) / 100)
+            distanceLabel.text = roundedDistanceInMiles + " mi"
+        }
+        
+        if let rating = selectedAnnotation?.rating {
+            ratingLabel.text = createStarRatings(rating: rating, ratingLabelText: ratingLabelText)
+        }
+        
+        if let imageUrl = selectedAnnotation?.imageUrl, let url = URL(string: imageUrl) {
+            businessImageView.sd_setImage(with: url, placeholderImage: nil)
         }
     }
 }

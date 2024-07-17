@@ -218,14 +218,14 @@ class HomeVC: UIViewController {
         let segmentItems = ["Map", "List"]
         segmentedControl = UISegmentedControl(items: segmentItems)
         segmentedControl.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
-        
         segmentedControl.selectedSegmentIndex = 0
         view.addSubview(segmentedControl)
         
+        segmentedControl.tintColor = .white
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        
+    
         NSLayoutConstraint.activate([
-            segmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            segmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 98),
             segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             segmentedControl.heightAnchor.constraint(equalToConstant: 60)
@@ -398,11 +398,35 @@ extension HomeVC: CLLocationManagerDelegate {
 }
 
 extension HomeVC: MKMapViewDelegate {
+   
+    // Customize annotation view
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let customAnnotation = annotation as? CustomPointAnnotation else { return nil }
+        
+        let identifier = "CustomMarkerAnnotation"
+        var annotationView: MKMarkerAnnotationView
+        
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView {
+            annotationView = dequeuedView
+            annotationView.annotation = customAnnotation
+        } else {
+            annotationView = MKMarkerAnnotationView(annotation: customAnnotation, reuseIdentifier: identifier)
+            annotationView.canShowCallout = false
+            
+            // Customize the color of the marker
+            annotationView.markerTintColor = UIColor(named: "AccentColor")
+            
+            // Add a glyph image
+            annotationView.glyphImage = UIImage(systemName: "fork.knife")
+        }
+        
+        return annotationView
+    }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
         guard let annotation = view.annotation as? CustomPointAnnotation else { return }
-        
+                
         self.selectedAnnotation = annotation
         
         if isPopUpViewVisible == false {

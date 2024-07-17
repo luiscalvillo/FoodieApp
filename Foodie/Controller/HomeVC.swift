@@ -49,6 +49,7 @@ class HomeVC: UIViewController {
     var listViewIsVisible = false
     
     var segmentedControl = UISegmentedControl()
+    var segmentedControlView = UIView()
     
     
     // MARK: - View Lifecycle
@@ -103,7 +104,7 @@ class HomeVC: UIViewController {
         mapView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 0),
+            mapView.topAnchor.constraint(equalTo: segmentedControlView.bottomAnchor, constant: 0),
             mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
@@ -135,10 +136,11 @@ class HomeVC: UIViewController {
         let width = view.self.frame.width
         
         // Pop Up View
-        popUpView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: popUpViewHeight))
+        popUpView = UIView(frame: CGRect(x: 8, y: 0, width: width - 16, height: popUpViewHeight))
         popUpView.layer.cornerRadius = 16
         popUpView.clipsToBounds = true
         popUpView.backgroundColor = .white
+        popUpView.layer.zPosition = 2
         self.view.addSubview(popUpView)
         
         // Image
@@ -195,7 +197,7 @@ class HomeVC: UIViewController {
         isPopUpViewVisible = true
         
         UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 2.0, options: .curveEaseIn, animations: {
-            self.popUpView.frame.origin.y = self.view.frame.height - self.popUpViewHeight
+            self.popUpView.frame.origin.y = 170
         }, completion: nil)
     }
     
@@ -204,7 +206,7 @@ class HomeVC: UIViewController {
         isPopUpViewVisible = false
         
         UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 2.0, options: .curveEaseIn, animations: {
-            self.popUpView.frame.origin.y = self.view.frame.height + self.popUpViewHeight + self.margin
+            self.popUpView.frame.origin.y = -200
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
@@ -215,21 +217,49 @@ class HomeVC: UIViewController {
     
     func configureSegmentedControl() {
         
+        // Segmented Control View
+        
+        view.addSubview(segmentedControlView)
+        
+        segmentedControlView.backgroundColor = UIColor(named: "AccentColor")
+        segmentedControlView.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControlView.layer.zPosition = 10
+        
+        NSLayoutConstraint.activate([
+            segmentedControlView.topAnchor.constraint(equalTo: view.topAnchor, constant: 98),
+            segmentedControlView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            segmentedControlView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            segmentedControlView.heightAnchor.constraint(equalToConstant: 68)
+        ])
+        
+        // Segmented Control
+        
         let segmentItems = ["Map", "List"]
         segmentedControl = UISegmentedControl(items: segmentItems)
         segmentedControl.addTarget(self, action: #selector(valueChanged(_:)), for: .valueChanged)
         segmentedControl.selectedSegmentIndex = 0
-        view.addSubview(segmentedControl)
+        
+        segmentedControlView.addSubview(segmentedControl)
         
         segmentedControl.tintColor = .white
+        segmentedControl.backgroundColor = UIColor(named: "AccentColor")?.withAlphaComponent(0.50)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-    
+        
         NSLayoutConstraint.activate([
-            segmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 98),
-            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            segmentedControl.topAnchor.constraint(equalTo: segmentedControlView.topAnchor, constant: 4),
+            segmentedControl.leadingAnchor.constraint(equalTo: segmentedControlView.leadingAnchor, constant: 4),
+            segmentedControl.trailingAnchor.constraint(equalTo: segmentedControlView.trailingAnchor, constant: -4),
             segmentedControl.heightAnchor.constraint(equalToConstant: 60)
         ])
+        
+        // Segmented Control Font Attributes
+        let font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        
+        let normalAttribute: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: UIColor.white]
+        segmentedControl.setTitleTextAttributes(normalAttribute, for: .normal)
+        
+        let selectedAttribute: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: UIColor(named: "AccentColor") as Any]
+        segmentedControl.setTitleTextAttributes(selectedAttribute, for: .selected)
     }
     
     @objc
@@ -271,25 +301,11 @@ class HomeVC: UIViewController {
         tableView.separatorStyle = .none
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: segmentedControlView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-    }
-    
-    
-    
-    // MARK: - Navigation
-    
-    func goToBusinessDetailVC() {
-        guard let selectedAnnotation = self.selectedAnnotation else { return }
-        guard let business = businessList.first(where: { $0.latitude == selectedAnnotation.latitude && $0.longitude == selectedAnnotation.longitude }) else { return }
-        
-        let businessDetailVC = BusinessDetailVC(business: business)
-        let navVC = UINavigationController(rootViewController: businessDetailVC)
-        
-        self.present(navVC, animated: true)
     }
     
     private func setupLocationManager() {
@@ -307,6 +323,19 @@ class HomeVC: UIViewController {
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         mapView.center = view.center
+    }
+    
+    
+    // MARK: - Navigation
+    
+    func goToBusinessDetailVC() {
+        guard let selectedAnnotation = self.selectedAnnotation else { return }
+        guard let business = businessList.first(where: { $0.latitude == selectedAnnotation.latitude && $0.longitude == selectedAnnotation.longitude }) else { return }
+        
+        let businessDetailVC = BusinessDetailVC(business: business)
+        let navVC = UINavigationController(rootViewController: businessDetailVC)
+        
+        self.present(navVC, animated: true)
     }
 }
 
@@ -443,10 +472,12 @@ extension HomeVC: MKMapViewDelegate {
         // Skip user location annotation
         guard !(view.annotation is MKUserLocation) else { return }
         
+        // Business details in popup view
         businessNameLabel.text = selectedAnnotation?.title
         addressLabel.text = selectedAnnotation?.address
         
-        if let distanceInMiles = selectedAnnotation?.distance.getMiles() {
+        if let distance = selectedAnnotation?.distance {
+            let distanceInMiles = distance.getMiles()
             let roundedDistanceInMiles = String(format: "%.2f", ceil(distanceInMiles * 100) / 100)
             distanceLabel.text = roundedDistanceInMiles + " mi"
         }
@@ -461,19 +492,49 @@ extension HomeVC: MKMapViewDelegate {
     }
 }
 
-
 class CustomPointAnnotation: MKPointAnnotation {
-    var name: String!
-    var address: String!
-    var coordinates: [String : Double]!
-    var imageUrl: String!
-    var latitude: Double!
-    var longitude: Double!
-    var distance: Double!
-    var isClosed: Bool!
-    var rating: Double!
-    var phone: String!
-    var displayPhone: String!
-    var website: String!
-    var hours: [String : Any]!
+    var name: String?
+    var address: String?
+    var coordinates: [String: Double]?
+    var imageUrl: String?
+    var latitude: Double?
+    var longitude: Double?
+    var distance: Double?
+    var isClosed: Bool?
+    var rating: Double?
+    var phone: String?
+    var displayPhone: String?
+    var website: String?
+    var hours: [String: Any]?
+    
+    init(name: String? = nil,
+         address: String? = nil,
+         coordinates: [String: Double]? = nil,
+         imageUrl: String? = nil,
+         latitude: Double? = nil,
+         longitude: Double? = nil,
+         distance: Double? = nil,
+         isClosed: Bool? = nil,
+         rating: Double? = nil,
+         phone: String? = nil,
+         displayPhone: String? = nil,
+         website: String? = nil,
+         hours: [String: Any]? = nil) {
+        
+        self.name = name
+        self.address = address
+        self.coordinates = coordinates
+        self.imageUrl = imageUrl
+        self.latitude = latitude
+        self.longitude = longitude
+        self.distance = distance
+        self.isClosed = isClosed
+        self.rating = rating
+        self.phone = phone
+        self.displayPhone = displayPhone
+        self.website = website
+        self.hours = hours
+        
+        super.init()
+    }
 }

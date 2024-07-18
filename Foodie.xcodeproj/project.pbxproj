@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A82438142C497988002EF180 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82438132C497988002EF180 /* Constants.swift */; };
+		A82438162C49A4DE002EF180 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82438152C49A4DE002EF180 /* Helpers.swift */; };
 		A825603029EBD3CA009835B4 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = A825602F29EBD3CA009835B4 /* SDWebImage */; };
 		A833C83F2C2183EF00491C88 /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A833C83E2C2183EF00491C88 /* BusinessCell.swift */; };
 		A887772129DEA2150089BC49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A887772029DEA2150089BC49 /* AppDelegate.swift */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		A82438132C497988002EF180 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A82438152C49A4DE002EF180 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		A833C83E2C2183EF00491C88 /* BusinessCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
 		A887771D29DEA2150089BC49 /* Foodie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Foodie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A887772029DEA2150089BC49 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			children = (
 				A887773629DF9FB00089BC49 /* Extensions.swift */,
 				A82438132C497988002EF180 /* Constants.swift */,
+				A82438152C49A4DE002EF180 /* Helpers.swift */,
 				A887773A29DFAB610089BC49 /* Business.swift */,
 				A887773829DFA7D50089BC49 /* FetchBusinessData.swift */,
 			);
@@ -187,6 +190,7 @@
 				A887772529DEA2150089BC49 /* HomeVC.swift in Sources */,
 				A833C83F2C2183EF00491C88 /* BusinessCell.swift in Sources */,
 				A887772129DEA2150089BC49 /* AppDelegate.swift in Sources */,
+				A82438162C49A4DE002EF180 /* Helpers.swift in Sources */,
 				A887774529E29EB20089BC49 /* BusinessDetailVC.swift in Sources */,
 				A887773929DFA7D50089BC49 /* FetchBusinessData.swift in Sources */,
 				A887773B29DFAB610089BC49 /* Business.swift in Sources */,

@@ -15,12 +15,12 @@ class BusinessDetailVC: UIViewController {
     private var business: Business
     private var businessImageView = UIImageView()
     private  var ratingLabelText = ""
-   
+    
     private var businessNameLabel = UILabel()
     private var addressLabel = UILabel()
     private var distanceLabel = UILabel()
     private var ratingLabel = UILabel()
-  
+    
     private var businessInformationStackView = UIStackView()
     private var background = UIView()
     private var directionsButton = UIButton()
@@ -59,7 +59,7 @@ class BusinessDetailVC: UIViewController {
     // MARK: - Setup Methods
     
     func createMapView() {
-
+        
         self.view.addSubview(mapView)
         
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,7 +150,7 @@ class BusinessDetailVC: UIViewController {
         businessInformationStackView.addArrangedSubview(businessNameLabel)
         businessInformationStackView.addArrangedSubview(ratingLabel)
         businessInformationStackView.addArrangedSubview(addressLabel)
-        businessInformationStackView.addArrangedSubview(distanceLabel)  
+        businessInformationStackView.addArrangedSubview(distanceLabel)
     }
     
     func createButtonsStackView() {
@@ -159,59 +159,42 @@ class BusinessDetailVC: UIViewController {
         background.addSubview(buttonsStackView)
 
         buttonsStackView.spacing = 16
-        
         buttonsStackView.distribution = .fillProportionally
-                
-        phoneButton.backgroundColor = .white
-        phoneButton.setImage(UIImage(systemName: "phone"), for: .normal)
-        phoneButton.layer.cornerRadius = 8
-        phoneButton.layer.borderColor = ColorTheme().accent?.cgColor
-        phoneButton.layer.borderWidth = 2
-        phoneButton.tintColor = .theme.accent
-        phoneButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        
-        phoneButton.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
-
         buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             buttonsStackView.topAnchor.constraint(equalTo: businessInformationStackView.bottomAnchor, constant: 16),
             buttonsStackView.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 16),
             buttonsStackView.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -16),
-            buttonsStackView.heightAnchor.constraint(equalToConstant: 50)
+            buttonsStackView.heightAnchor.constraint(equalToConstant: 60)
         ])
         
-        websiteButton.backgroundColor = .white
-        websiteButton.setImage(UIImage(systemName: "safari"), for: .normal)
-        websiteButton.layer.cornerRadius = 8
-        websiteButton.layer.borderColor = ColorTheme().accent?.cgColor
-        websiteButton.layer.borderWidth = 2
-        websiteButton.tintColor = .theme.accent
-        
-        websiteButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        
-        let websiteTapGesture = UITapGestureRecognizer(target: self, action: #selector(goToAppleMaps(sender:)))
-        websiteButton.addGestureRecognizer(websiteTapGesture)
-        
-        directionsButton.backgroundColor = .theme.accent
-        directionsButton.layer.borderColor = ColorTheme().accent?.cgColor
-        directionsButton.layer.borderWidth = 2
-        directionsButton.setImage(UIImage(systemName: "car"), for: .normal)
-        directionsButton.layer.cornerRadius = 8
-        directionsButton.tintColor = .white
-        directionsButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        configureButton(button: directionsButton, imageName: "car", title: "Directions", isPrimary: true)
+
+        configureButton(button: phoneButton, imageName: "phone", title: "Phone")
+        configureButton(button: websiteButton, imageName: "safari", title: "Website")
         
         phoneButton.widthAnchor.constraint(equalTo: websiteButton.widthAnchor).isActive = true
         directionsButton.widthAnchor.constraint(equalTo: phoneButton.widthAnchor, multiplier: 2).isActive = true
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToAppleMaps(sender:)))
-        directionsButton.addGestureRecognizer(tapGesture)
     }
     
+    @objc
+    func directionsButtonTapped() {
+        goToAppleMaps()
+    }
     
     @objc
     func phoneButtonTapped() {
         makePhoneCall(phoneNumber: business.phone ?? "")
+    }
+    
+    @objc
+    func websiteButtonTapped() {
+        if let url = URL(string: business.website ?? "") {
+            open(url: url)
+        } else {
+            print("Invalid url")
+        }
     }
     
     func makePhoneCall(phoneNumber: String) {
@@ -226,35 +209,50 @@ class BusinessDetailVC: UIViewController {
         }
     }
     
-    @objc
-    func websiteButtonTapped() {
-        if let url = URL(string: business.website ?? "") {
-            open(url: url)
-        } else {
-            print("Invalid url")
+    func configureButton(button: UIButton, imageName: String, title: String, isPrimary: Bool = false, fontSize: CGFloat = 14) {
+        var config = UIButton.Configuration.plain()
+        
+        config.image = UIImage(systemName: imageName)
+        
+        // Create an Attributed String for the title with the desired font size
+        var attributedTitle = AttributedString(title)
+        attributedTitle.font = UIFont.systemFont(ofSize: fontSize)
+        attributedTitle.foregroundColor = isPrimary ? .white : .theme.accent
+        
+        config.attributedTitle = attributedTitle
+        config.background.backgroundColor = isPrimary ? .theme.accent : .white
+        config.imagePlacement = .top
+        config.imagePadding = 8
+        config.titlePadding = 8
+    
+        button.configuration = config
+        button.layer.borderWidth = 2
+        button.layer.borderColor = ColorTheme().accent?.cgColor
+        button.tintColor = isPrimary ? .white : .theme.accent
+
+        // Add corner radius directly to the button's layer
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+
+        // Add action for the button
+        if button == phoneButton {
+            button.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
+        } else if button == websiteButton {
+            button.addTarget(self, action: #selector(websiteButtonTapped), for: .touchUpInside)
+        } else if button == directionsButton {
+            button.addTarget(self, action: #selector(directionsButtonTapped), for: .touchUpInside)
         }
     }
     
-    func open(url: URL) {
-        if #available(iOS 10, *) {
-            UIApplication.shared.open(url, options: [:], completionHandler: { (success) in
-                print("Open \(url): \(success)")
-            })
-        } else if UIApplication.shared.openURL(url) {
-            print("Open \(url)")
-        }
-    }
-    
-    
+  
     // MARK: - Navigation
-    
-    @objc
-    func goToAppleMaps(sender: UITapGestureRecognizer) {
+  
+    func goToAppleMaps() {
         
         let destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: business.latitude ?? 0.0, longitude: business.longitude ?? 0.0)))
         
         destination.name = business.name
-
+        
         MKMapItem.openMaps(with: [destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
 }

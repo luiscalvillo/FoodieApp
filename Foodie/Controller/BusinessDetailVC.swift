@@ -154,22 +154,21 @@ class BusinessDetailVC: UIViewController {
     }
     
     func createButtonsStackView() {
+        buttonsStackView = UIStackView(arrangedSubviews: [directionsButton, phoneButton, websiteButton])
+
         background.addSubview(buttonsStackView)
-        buttonsStackView.addArrangedSubview(directionsButton)
-        buttonsStackView.addArrangedSubview(phoneButton)
-        buttonsStackView.addArrangedSubview(websiteButton)
-      
+
         buttonsStackView.spacing = 16
         
-        buttonsStackView.distribution = .fillEqually
+        buttonsStackView.distribution = .fillProportionally
                 
-        phoneButton.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         phoneButton.backgroundColor = .white
         phoneButton.setImage(UIImage(systemName: "phone"), for: .normal)
         phoneButton.layer.cornerRadius = 8
-        phoneButton.layer.borderColor = UIColor.lightGray.cgColor
+        phoneButton.layer.borderColor = ColorTheme().accent?.cgColor
         phoneButton.layer.borderWidth = 2
-        phoneButton.tintColor = .lightGray
+        phoneButton.tintColor = .theme.accent
+        phoneButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
         phoneButton.addTarget(self, action: #selector(phoneButtonTapped), for: .touchUpInside)
 
@@ -185,19 +184,25 @@ class BusinessDetailVC: UIViewController {
         websiteButton.backgroundColor = .white
         websiteButton.setImage(UIImage(systemName: "safari"), for: .normal)
         websiteButton.layer.cornerRadius = 8
-        websiteButton.layer.borderColor = UIColor.lightGray.cgColor
+        websiteButton.layer.borderColor = ColorTheme().accent?.cgColor
         websiteButton.layer.borderWidth = 2
-        websiteButton.tintColor = .lightGray
+        websiteButton.tintColor = .theme.accent
+        
+        websiteButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
         let websiteTapGesture = UITapGestureRecognizer(target: self, action: #selector(goToAppleMaps(sender:)))
         websiteButton.addGestureRecognizer(websiteTapGesture)
         
-        directionsButton.backgroundColor = .white
-        directionsButton.layer.borderColor = UIColor.lightGray.cgColor
+        directionsButton.backgroundColor = .theme.accent
+        directionsButton.layer.borderColor = ColorTheme().accent?.cgColor
         directionsButton.layer.borderWidth = 2
         directionsButton.setImage(UIImage(systemName: "car"), for: .normal)
         directionsButton.layer.cornerRadius = 8
-        directionsButton.tintColor = .lightGray
+        directionsButton.tintColor = .white
+        directionsButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        phoneButton.widthAnchor.constraint(equalTo: websiteButton.widthAnchor).isActive = true
+        directionsButton.widthAnchor.constraint(equalTo: phoneButton.widthAnchor, multiplier: 2).isActive = true
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(goToAppleMaps(sender:)))
         directionsButton.addGestureRecognizer(tapGesture)

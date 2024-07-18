@@ -323,8 +323,17 @@ class HomeVC: UIViewController {
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         mapView.center = view.center
+        
+        let mapViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleMapViewScreenTap(sender:)))
+        mapView.addGestureRecognizer(mapViewTapGesture)
     }
     
+    @objc 
+    func handleMapViewScreenTap(sender: UITapGestureRecognizer) {
+        if isPopUpViewVisible {
+            hidePopUpView()
+        }
+    }
     
     // MARK: - Navigation
     
@@ -457,12 +466,6 @@ extension HomeVC: MKMapViewDelegate {
         guard let annotation = view.annotation as? CustomPointAnnotation else { return }
                 
         self.selectedAnnotation = annotation
-        
-        // Check if the popup view is not visible
-        guard !isPopUpViewVisible else {
-            hidePopUpView()
-            return
-        }
         
         // Show the popup view if the map view is visible
         if mapViewIsVisible {

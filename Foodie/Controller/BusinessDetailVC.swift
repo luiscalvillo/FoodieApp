@@ -170,10 +170,9 @@ class BusinessDetailVC: UIViewController {
             buttonsStackView.heightAnchor.constraint(equalToConstant: 60)
         ])
         
-        configureButton(button: directionsButton, imageName: "car", title: "Directions", isPrimary: true)
-
-        configureButton(button: phoneButton, imageName: "phone", title: "Phone")
-        configureButton(button: websiteButton, imageName: "safari", title: "Website")
+        configureButton(button: directionsButton, SFSymbol: SFSymbols.directions, title: "Directions", isPrimary: true)
+        configureButton(button: phoneButton, SFSymbol: SFSymbols.phone, title: "Phone")
+        configureButton(button: websiteButton, SFSymbol: SFSymbols.website, title: "Website")
         
         phoneButton.widthAnchor.constraint(equalTo: websiteButton.widthAnchor).isActive = true
         directionsButton.widthAnchor.constraint(equalTo: phoneButton.widthAnchor, multiplier: 2).isActive = true
@@ -210,10 +209,10 @@ class BusinessDetailVC: UIViewController {
         }
     }
     
-    func configureButton(button: UIButton, imageName: String, title: String, isPrimary: Bool = false, fontSize: CGFloat = 14) {
+    func configureButton(button: UIButton, SFSymbol: UIImage?, title: String, isPrimary: Bool = false, fontSize: CGFloat = 14) {
         var config = UIButton.Configuration.plain()
-        
-        config.image = UIImage(systemName: imageName)
+      
+        config.image = SFSymbol
         
         // Create an Attributed String for the title with the desired font size
         var attributedTitle = AttributedString(title)
@@ -281,7 +280,7 @@ extension BusinessDetailVC: MKMapViewDelegate {
             annotationView.markerTintColor = .theme.accent
             
             // Add a glyph image
-            annotationView.glyphImage = UIImage(systemName: "fork.knife")
+            annotationView.glyphImage = SFSymbols.annotation
         }
         
         return annotationView

@@ -457,8 +457,7 @@ extension HomeVC: MKMapViewDelegate {
             annotationView.markerTintColor = .theme.accent
             
             // Add a glyph image
-            annotationView.glyphImage = UIImage(systemName: "fork.knife")
-        }
+            annotationView.glyphImage = SFSymbols.annotation        }
         
         return annotationView
     }

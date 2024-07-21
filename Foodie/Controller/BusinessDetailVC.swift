@@ -29,7 +29,7 @@ class BusinessDetailVC: UIViewController {
     private var buttonsStackView = UIStackView()
     private let mapView = MKMapView()
     
-    
+    var customPointAnnotation: CustomPointAnnotation!
     // MARK: - Initialization
     
     init(business: Business) {
@@ -59,6 +59,8 @@ class BusinessDetailVC: UIViewController {
     // MARK: - Setup Methods
     
     func createMapView() {
+        
+        mapView.delegate = self
         
         self.view.addSubview(mapView)
         
@@ -90,12 +92,11 @@ class BusinessDetailVC: UIViewController {
         mapView.isScrollEnabled = false
         mapView.isRotateEnabled = false
         
-        let annotation = MKPointAnnotation()
+        customPointAnnotation = CustomPointAnnotation()
         
-        annotation.coordinate.latitude = business.latitude ?? 0.0
-        annotation.coordinate.longitude = business.longitude ?? 0.0
+        customPointAnnotation.coordinate = CLLocationCoordinate2D(latitude: business.latitude ?? 0.0, longitude: business.longitude ?? 0.0)
         
-        self.mapView.addAnnotation(annotation)
+        self.mapView.addAnnotation(customPointAnnotation)
     }
     
     func createBackgroundView() {
@@ -145,7 +146,7 @@ class BusinessDetailVC: UIViewController {
         self.background.addSubview(businessInformationStackView)
         
         businessInformationStackView.axis = .vertical
-        businessInformationStackView.distribution = .equalSpacing
+        businessInformationStackView.distribution = .fillProportionally
         
         businessInformationStackView.addArrangedSubview(businessNameLabel)
         businessInformationStackView.addArrangedSubview(ratingLabel)
@@ -254,5 +255,35 @@ class BusinessDetailVC: UIViewController {
         destination.name = business.name
         
         MKMapItem.openMaps(with: [destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+    }
+}
+
+
+// MARK: - Extensions
+
+extension BusinessDetailVC: MKMapViewDelegate {
+   
+    // Customize annotation view
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let customAnnotation = annotation as? CustomPointAnnotation else { return nil }
+        
+        let identifier = "CustomMarkerAnnotation"
+        var annotationView: MKMarkerAnnotationView
+        
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView {
+            annotationView = dequeuedView
+            annotationView.annotation = customAnnotation
+        } else {
+            annotationView = MKMarkerAnnotationView(annotation: customAnnotation, reuseIdentifier: identifier)
+            annotationView.canShowCallout = false
+            
+            // Customize the color of the marker
+            annotationView.markerTintColor = .theme.accent
+            
+            // Add a glyph image
+            annotationView.glyphImage = UIImage(systemName: "fork.knife")
+        }
+        
+        return annotationView
     }
 }

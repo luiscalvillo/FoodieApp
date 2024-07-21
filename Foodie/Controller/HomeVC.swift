@@ -197,7 +197,7 @@ class HomeVC: UIViewController {
         isPopUpViewVisible = true
         
         UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 2.0, options: .curveEaseIn, animations: {
-            self.popUpView.frame.origin.y = 170
+            self.popUpView.frame.origin.y = 172
         }, completion: nil)
     }
     
@@ -375,6 +375,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         
         imageView.sd_setImage(with: URL(string: businessImageUrl!), placeholderImage: nil)
         
+        cell.selectionStyle = .none
+        
         return cell
     }
     
@@ -452,7 +454,7 @@ extension HomeVC: MKMapViewDelegate {
             annotationView.canShowCallout = false
             
             // Customize the color of the marker
-            annotationView.markerTintColor = UIColor(named: "AccentColor")
+            annotationView.markerTintColor = .theme.accent
             
             // Add a glyph image
             annotationView.glyphImage = UIImage(systemName: "fork.knife")

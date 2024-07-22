@@ -148,10 +148,10 @@ class BusinessDetailVC: UIViewController {
         businessInformationStackView.axis = .vertical
         businessInformationStackView.distribution = .fillProportionally
         
-        businessInformationStackView.addArrangedSubview(businessNameLabel)
-        businessInformationStackView.addArrangedSubview(ratingLabel)
-        businessInformationStackView.addArrangedSubview(addressLabel)
-        businessInformationStackView.addArrangedSubview(distanceLabel)
+        // Add the labels to the stack view from an array
+        [businessNameLabel, ratingLabel, addressLabel, distanceLabel].forEach {
+            businessInformationStackView.addArrangedSubview($0)
+        }
     }
     
     func createButtonsStackView() {

@@ -106,9 +106,9 @@ class BusinessCell: UITableViewCell {
     }
     
     private func setupInformationStackView() {
-        informationStackView.addArrangedSubview(nameLabel)
-        informationStackView.addArrangedSubview(ratingLabel)
-        informationStackView.addArrangedSubview(addressLabel)
-        informationStackView.addArrangedSubview(distanceLabel)
+        // Add the labels to the stack view from an array
+        [nameLabel, ratingLabel, addressLabel, distanceLabel].forEach {
+            informationStackView.addArrangedSubview($0)
+        }
     }
 }

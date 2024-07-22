@@ -23,12 +23,21 @@ class HomeVC: UIViewController {
     
     var businesses: [Business] = []
     
+    // Segmented Control
+    var segmentedControl = UISegmentedControl()
+    var segmentedControlView = UIView()
+    
+    var mapViewIsVisible = true
+    var listViewIsVisible = false
+    
+    // Map View
+    let mapView = MKMapView()
+    
     var customPointAnnotation: CustomPointAnnotation!
     var selectedAnnotation: CustomPointAnnotation?
     
-    let mapView = MKMapView()
+    // Popup View
     var popUpView = UIView()
-    
     let businessPopUpStackView = UIStackView()
     let businessInformationStackView = UIStackView()
     let businessImageView = UIImageView()
@@ -43,15 +52,10 @@ class HomeVC: UIViewController {
     let margin: CGFloat = 16
     let popUpViewHeight: CGFloat = 150
     
+    // Table View
     var tableView = UITableView()
     
-    var mapViewIsVisible = true
-    var listViewIsVisible = false
-    
-    var segmentedControl = UISegmentedControl()
-    var segmentedControlView = UIView()
-    
-    
+
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
@@ -74,6 +78,8 @@ class HomeVC: UIViewController {
         addPopUpViewTapGesture()
         toggleBetweenMapAndListView()
     }
+    
+    // MARK: - Setup
     
     func setupView() {
         self.title = "Foodie"
@@ -164,10 +170,10 @@ class HomeVC: UIViewController {
         distanceLabel.textColor = .black
         distanceLabel.font = UIFont.systemFont(ofSize: 16)
         
-        businessInformationStackView.addArrangedSubview(businessNameLabel)
-        businessInformationStackView.addArrangedSubview(ratingLabel)
-        businessInformationStackView.addArrangedSubview(addressLabel)
-        businessInformationStackView.addArrangedSubview(distanceLabel)
+        // Add the labels to the stack view from an array
+        [businessNameLabel, ratingLabel, addressLabel, distanceLabel].forEach {
+            businessInformationStackView.addArrangedSubview($0)
+        }
         
         // Business Information Stack View
         businessInformationStackView.axis = .vertical
@@ -196,6 +202,7 @@ class HomeVC: UIViewController {
         
         isPopUpViewVisible = true
         
+        // Slide down popup view to show it
         UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 2.0, options: .curveEaseIn, animations: {
             self.popUpView.frame.origin.y = 172
         }, completion: nil)
@@ -205,6 +212,7 @@ class HomeVC: UIViewController {
         
         isPopUpViewVisible = false
         
+        // Slide up popup view to hide it
         UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 2.0, options: .curveEaseIn, animations: {
             self.popUpView.frame.origin.y = -200
             self.view.layoutIfNeeded()
@@ -334,6 +342,7 @@ class HomeVC: UIViewController {
             hidePopUpView()
         }
     }
+    
     
     // MARK: - Navigation
     

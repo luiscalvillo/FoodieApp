@@ -23,7 +23,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A8088E972C52F8E6005249EF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A82438132C497988002EF180 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A82438152C49A4DE002EF180 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		A833C83E2C2183EF00491C88 /* BusinessCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
@@ -80,7 +79,6 @@
 			isa = PBXGroup;
 			children = (
 				A887772029DEA2150089BC49 /* AppDelegate.swift */,
-				A8088E972C52F8E6005249EF /* README.md */,
 				A887772229DEA2150089BC49 /* SceneDelegate.swift */,
 				A887773529DF9F7E0089BC49 /* Model */,
 				A833C8402C2183F400491C88 /* View */,

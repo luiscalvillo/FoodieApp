@@ -6,6 +6,7 @@ A food discovery app to find local eateries nearby.
 * Full programmatic UI
 * MVC
 * Yelp Fusion API
+* MapKit
 
 ## Features
 * Directions, phone calling, business websites

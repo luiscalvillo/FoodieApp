@@ -13,7 +13,7 @@ extension HomeVC {
     
     func retrieveBusinesses(latitude: Double, longitude: Double, category: String, limit: Int, sortBy: String, locale: String, completionHandler: @escaping ([Business]?, Error?) -> Void) {
         
-        let apiKey = ""
+        let apiKey = "YOUR_API_KEY"
         let baseURL = "https://api.yelp.com/v3/businesses/search?latitude=\(latitude)&longitude=\(longitude)&categories=\(category)&limit=\(limit)&sort_by=\(sortBy)&locale=\(locale)"
         let url = URL(string: baseURL)
         
